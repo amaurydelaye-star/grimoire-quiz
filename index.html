@@ -206,6 +206,12 @@ body[data-w=sw] .cine .ct{text-shadow:0 2px 0 #1a0f08,0 0 30px rgba(255,170,90,.
 .dgrid{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin:14px 0 6px}
 .dgrid span{width:26px;height:26px;font-size:14px;border-radius:6px;display:grid;place-items:center;font-weight:700;color:#fff;animation:pop .45s cubic-bezier(.2,1.6,.4,1) both}
 .dgrid .ok{background:#2e7a3a}.dgrid .ko{background:#a8321f}
+/* Suites logiques */
+.suite{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 4px;margin:6px 0 4px}
+.suite .st{padding:7px 11px;border-radius:10px;background:rgba(255,250,235,.75);border:1px solid rgba(90,60,20,.35);font-size:16px;line-height:1.25;box-shadow:0 2px 0 rgba(0,0,0,.12);animation:rise .4s both}
+.suite .st:nth-of-type(2){animation-delay:.06s}.suite .st:nth-of-type(3){animation-delay:.12s}.suite .st:nth-of-type(4){animation-delay:.18s}.suite .st:nth-of-type(5){animation-delay:.24s}.suite .st:nth-of-type(6){animation-delay:.3s}
+.suite .st.gap{background:var(--blood);color:#ffe9b8;border-color:var(--gold);display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:48px;min-height:36px}.suite .st b{display:inline;font-size:20px;line-height:1;color:#ffe9b8;animation:sblink 1.2s ease-in-out infinite}@keyframes sblink{50%{opacity:.35}}
+.suite i{font-style:normal;color:var(--gold);font-weight:700}
 /* La Roue des savoirs */
 .rmodes{display:grid;gap:10px;margin-top:12px;text-align:start}.rmodes .mode b{font-size:18px}
 .rworlds{display:grid;gap:10px;margin:12px 0}.rworlds .world{text-align:start}.rworlds .wtxt b{color:#ffd987}.rworlds .wtxt>span{color:#f3e6c4}.rworlds .wtxt i{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:4px;border:1px solid rgba(255,255,255,.5)}
@@ -3638,7 +3644,7 @@ secret:['#a8603a','<rect x="9" y="20" width="30" height="18" rx="2" fill="#1a2a2
 who:['#5e6b80','<path d="M9 37c5-2.5 25-2.5 30 0-4 3.5-26 3.5-30 0z" fill="#2b3240"/><path d="M15 36c2-8 4-20 13-27 1 6 3 9 6 12-2 0-4 1-5 3 1 4 3 8 5 12z" fill="#aab6c6"/><path d="M15 36c5 1.2 13 1.2 19 0" stroke="#ffe39a" stroke-width="1.8"/><circle cx="35" cy="11" r="1.5" fill="#ffe39a"/><circle cx="39" cy="17" r="1" fill="#ffe39a"/>'],
 liste:['#9a7b3c','<rect x="13" y="11" width="22" height="27" fill="#f6efd9"/><rect x="10" y="8" width="28" height="5" rx="2.5" fill="#c9a46b"/><rect x="10" y="36" width="28" height="5" rx="2.5" fill="#c9a46b"/><path d="M17 18h14M17 23h14M17 28h10" stroke="#8a6a2a" stroke-width="1.4"/><circle cx="31" cy="31" r="3" fill="#b83a2a"/>'],
 quote:['#3d8a62','<path d="M8 12h26a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H20l-7 6v-6H8a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z" fill="#f6efd9"/><path d="M12 24c0-3 1.5-5 4-5.5M12 24h4v-3h-4zM21 24c0-3 1.5-5 4-5.5M21 24h4v-3h-4z" fill="#2d6b4a" stroke="#2d6b4a" stroke-width="1.2"/><path d="M45 3c-7 2-12 9-14 17l2 1c3-7 8-13 12-18z" fill="#ffe39a"/>'],
-emoji:['#2f7f88','<path d="M14 41l3-6h14l3 6z" fill="#5a4630"/><circle cx="24" cy="21" r="13" fill="#0f2c34"/><circle cx="24" cy="21" r="13" fill="none" stroke="#a6eef2" stroke-width="1.2"/><path d="M16 24c3-7 10-9 15-4-4-1-9 0-11 5z" fill="#ff8a4a" opacity=".9"/><circle cx="19" cy="15" r="3.4" fill="#fff" opacity=".3"/>'],
+emoji:['#2f7f88','<rect x="2" y="17" width="12" height="12" rx="3" fill="#f6efd9"/><rect x="18" y="17" width="12" height="12" rx="3" fill="#f6efd9"/><rect x="34" y="15" width="14" height="16" rx="3" fill="#7a1f12" stroke="#f6efd9" stroke-width="1.6"/><text x="41" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#f6efd9" font-family="Georgia,serif">?</text><path d="M14.5 23h3M30.5 23h3" stroke="#f6efd9" stroke-width="1.6"/>'],
 chrono:['#a07a2e','<path d="M14 7h20M14 41h20" stroke="#c9a46b" stroke-width="3" stroke-linecap="round"/><path d="M16 9c0 8 7 10 7 15s-7 7-7 15h16c0-8-7-10-7-15s7-7 7-15z" fill="#f6efd9" opacity=".92"/><path d="M19 13h10c-1 3-4 5-5 7-1-2-4-4-5-7zM18 38c1-4 4-6 6-7 2 1 5 3 6 7z" fill="#e0b84f"/>'],
 vf:['#6e7f35','<path d="M24 9v29M15 40h18" stroke="#f6efd9" stroke-width="2.4" stroke-linecap="round"/><path d="M9 15h30" stroke="#f6efd9" stroke-width="2"/><path d="M10 15l-5 11h10zM38 15l-5 11h10z" fill="none" stroke="#ffe39a" stroke-width="1.4"/><path d="M5 26a5 3 0 0 0 10 0zM33 26a5 3 0 0 0 10 0z" fill="#ffe39a"/><circle cx="24" cy="8" r="2.6" fill="#ffe39a"/>'],
 mix:['#b08a2a','<ellipse cx="24" cy="25" rx="14" ry="12" fill="none" stroke="#ffe39a" stroke-width="5.5"/><ellipse cx="24" cy="25" rx="14" ry="12" fill="none" stroke="#9a6a1e" stroke-width="1" stroke-dasharray="1.5 3"/><path d="M13 17a14 12 0 0 1 9-4" stroke="#fff" stroke-width="1.6" fill="none" opacity=".8"/>']
@@ -4380,6 +4386,121 @@ if(typeof HP!=="undefined")WORLDS.hp=Object.assign({},HP_CONF,HP);
 if(typeof SW!=="undefined")WORLDS.sw=Object.assign({},SW_CONF,SW);
 let W=WORLDS.me;
 
+/* ===== Suites logiques : trouver le terme manquant (remplace le jeu des émojis) =====
+   [univers, niveau, "terme|terme|?|terme", [bonne réponse, leurre, leurre, leurre], logique de la suite] */
+const SUITES={
+me:[
+["sda",1,"La Communauté de l’Anneau|Les Deux Tours|?",["Le Retour du Roi","La Bataille des Cinq Armées","La Désolation de Smaug","Un voyage inattendu"],"Les trois films de la trilogie, dans l’ordre."],
+["sda",1,"Frodon|Sam|Merry|?",["Pippin","Bilbon","Rosie","Gollum"],"Les quatre hobbits de la Communauté."],
+["sda",1,"Gandalf le Gris|chute avec le Balrog|?",["Gandalf le Blanc","Gandalf le Brun","Gandalf le Noir","Gandalf le Bleu"],"Après son combat contre le Balrog, Gandalf revient en magicien blanc."],
+["sda",1,"Denethor|son fils aîné Boromir|son fils cadet ?",["Faramir","Éomer","Théodred","Aragorn"],"Les deux fils de l’intendant Denethor."],
+["sda",1,"Théoden|son fils Théodred|son neveu Éomer|sa nièce ?",["Éowyn","Arwen","Rosie","Galadriel"],"La maison royale du Rohan."],
+["sda",1,"Glóin|son fils ?",["Gimli","Óin","Balin","Thorin"],"Gimli est le fils de Glóin, l’un des compagnons de Thorin."],
+["sda",2,"Fondcombe|la Moria|?|Amon Hen",["la Lothlórien","Edoras","Minas Tirith","Isengard"],"Le chemin de la Communauté dans le premier film."],
+["sda",2,"Isildur|?|Bilbon|Frodon|Sam",["Gollum","Elrond","Gandalf","Boromir"],"Les porteurs successifs de l’Anneau unique."],
+["sda",2,"Sacquet|Gamegie|Brandebouc|?",["Touque","Bolger","Sacquet-de-Besace","Fiersabot"],"Les noms de famille des quatre hobbits : Frodon Sacquet, Sam Gamegie, Merry Brandebouc, Pippin Touque."],
+["sda",2,"Le Gouffre de Helm|les champs du Pelennor|?",["la Porte Noire","la Bataille des Cinq Armées","Dagorlad","Amon Hen"],"Les grandes batailles de la guerre de l’Anneau, dans l’ordre."],
+["sda",2,"Petit-déjeuner|second petit-déjeuner|onze-heures|?|thé|dîner|souper",["déjeuner","brunch","en-cas de minuit","apéritif"],"Les repas des hobbits selon Pippin."],
+["sda",2,"Trois pour les Elfes|Sept pour les Nains|? pour les Hommes",["Neuf","Cinq","Six","Douze"],"Les anneaux de pouvoir du poème de l’Anneau."],
+["sda",2,"Thengel|Théoden|?",["Éomer","Théodred","Háma","Gamelin"],"Les rois du Rohan : à la mort de Théoden, son neveu Éomer devient roi."],
+["sda",2,"Emyn Muil|Marais des Morts|Porte Noire|Minas Morgul|?|Montagne du Destin",["l’Antre d’Arachné","Osgiliath","la Moria","Isengard"],"Le chemin de Frodon et Sam vers la Montagne du Destin."],
+["sda",3,"Ecthelion|Denethor|?",["Faramir","Boromir","Aragorn","Imrahil"],"Les intendants du Gondor : Faramir succède à son père, Boromir étant mort."],
+["sda",3,"Estel|Grands-Pas|Aragorn fils d’Arathorn|?",["Elessar","Isildur","Elendil","Arathorn"],"Les noms d’Aragorn, de son enfance à Fondcombe à son couronnement."],
+["sda",3,"Frodon : la fiole|Sam : la corde|Legolas : l’arc|Gimli : ?",["trois cheveux de Galadriel","une dague elfique","une broche de mithril","un anneau"],"Les cadeaux de Galadriel à la Communauté."],
+["sda",3,"Minas Ithil devient Minas Morgul|Minas Anor devient ?",["Minas Tirith","Osgiliath","Dol Amroth","Edoras"],"La tour de la Lune et la tour du Soleil, rebaptisées."],
+["sda",3,"Legolas : Elfe|Gimli : Nain|Aragorn : Homme|Gandalf : ?",["Magicien","Elfe","Homme","Ent"],"Les peuples représentés dans la Communauté."],
+["sda",3,"Elladan|Elrohir|?",["Arwen","Legolas","Haldir","Glorfindel"],"Les trois enfants d’Elrond."],
+["sda",4,"Amon Dîn|Eilenach|Nardol|Erelas|Min-Rimmon|Calenhad|?",["Halifirien","Edoras","Amon Hen","Dunharrow"],"Les feux d’alarme du Gondor, de Minas Tirith vers le Rohan."],
+["sda",4,"Gandalf : Gripoil|Legolas : Arod|Aragorn : Brego|Théoden : ?",["Nivacrin","Hasufel","Felaróf","Bill"],"Les chevaux des héros (Nivacrin est le nom français de Snowmane)."],
+["sda",4,"Saroumane le Blanc|?",["Saroumane aux Multiples Couleurs","Saroumane le Noir","Saroumane le Gris","Saroumane le Rouge"],"Dans le livre, Saroumane abandonne le blanc pour se dire « aux Multiples Couleurs »."],
+["hob",1,"Un voyage inattendu|La Désolation de Smaug|?",["La Bataille des Cinq Armées","Le Retour du Roi","Les Deux Tours","La Communauté de l’Anneau"],"Les trois films du Hobbit, dans l’ordre."],
+["hob",1,"Thranduil|son fils ?",["Legolas","Elrond","Tauriel","Haldir"],"Legolas est le fils du roi Thranduil."],
+["hob",2,"Thrór|Thráin|?",["Thorin","Dáin","Fíli","Balin"],"Trois générations : le grand-père, le père, puis Thorin Écu-de-Chêne."],
+["hob",2,"Dori|Nori|?",["Ori","Óin","Glóin","Bofur"],"Trois frères de la compagnie de Thorin."],
+["hob",2,"Bifur|Bofur|?",["Bombur","Balin","Dwalin","Bilbon"],"Bofur et Bombur sont frères, Bifur leur cousin."],
+["hob",2,"Balin et Dwalin|Fíli et Kíli|Óin et ?",["Glóin","Gimli","Ori","Thorin"],"Les paires de frères de la compagnie."],
+["hob",2,"Fondcombe|les Monts Brumeux|la maison de Beorn|?|Lacville",["la Forêt Noire","la Moria","la Lothlórien","les Collines de Fer"],"Le voyage de la compagnie de Thorin vers Erebor."],
+["hob",3,"Tom|Bert|?",["William","Bolg","Azog","Beorn"],"Les trois trolls qui capturent la compagnie."],
+["hob",3,"Bard|ses enfants Bain|Sigrid|?",["Tilda","Tauriel","Alfrid","Lindir"],"La famille de Bard l’Archer."],
+["hob",3,"Thrór|Thráin|Thorin|?",["Dáin Pied d’Acier","Fíli","Gimli","Balin"],"Les rois sous la Montagne : après la mort de Thorin, son cousin Dáin lui succède."],
+["hob",3,"Azog le Profanateur|son fils ?",["Bolg","Gothmog","Lurtz","Yazneg"],"Bolg est le fils d’Azog."],
+["rop",1,"Les Terres du Sud|éruption de l’Orodruin|?",["le Mordor","l’Eregion","le Lindon","Khazad-dûm"],"Le volcan transforme les Terres du Sud en Mordor."],
+["rop",2,"Narya|Nenya|?",["Vilya","Elessar","Silmaril","Arkenstone"],"Les trois anneaux des Elfes forgés par Celebrimbor."],
+["rop",2,"Gil-galad|son héraut ?",["Elrond","Celebrimbor","Arondir","Isildur"],"Elrond sert le haut roi Gil-galad."],
+["rop",3,"Narya : feu|Nenya : eau|Vilya : ?",["air","terre","glace","lumière"],"Les éléments des trois anneaux elfiques."],
+["rop",3,"Elendil|ses fils Isildur et ?",["Anárion","Valandil","Kemen","Pharazôn"],"Les deux fils d’Elendil, fondateurs du Gondor."],
+["rop",3,"Tar-Palantir|Tar-Míriel|?",["Ar-Pharazôn","Elendil","Isildur","Anárion"],"Les souverains de Númenor : Pharazôn s’empare du trône."],
+["rop",3,"Galadriel|son frère ?",["Finrod","Celeborn","Elrond","Gil-galad"],"Le frère de Galadriel, dont la mort lance sa traque de Sauron."],
+["rop",4,"Mairon|Sauron|Halbrand|?",["Annatar","Adar","Celebrimbor","L’Étranger"],"Les noms et visages de Sauron, jusqu’au « Seigneur des Dons » de la saison 2."]
+],
+hp:[
+["hpf",1,"À l’école des sorciers|La Chambre des secrets|?",["Le Prisonnier d’Azkaban","La Coupe de feu","L’Ordre du Phénix","Le Prince de sang-mêlé"],"Les trois premiers films, dans l’ordre."],
+["hpf",1,"Gryffondor|Poufsouffle|Serdaigle|?",["Serpentard","Beauxbâtons","Durmstrang","Ilvermorny"],"Les quatre maisons de Poudlard."],
+["hpf",1,"Gryffondor : lion|Serdaigle : aigle|Poufsouffle : blaireau|Serpentard : ?",["serpent","dragon","corbeau","hibou"],"Les emblèmes des maisons."],
+["hpf",1,"Endoloris|Imperium|?",["Avada Kedavra","Expelliarmus","Sectumsempra","Oubliettes"],"Les trois sortilèges impardonnables."],
+["hpf",1,"Baguette de sureau|Pierre de résurrection|?",["Cape d’invisibilité","Retourneur de temps","Miroir du Riséd","Choixpeau"],"Les trois Reliques de la Mort."],
+["hpf",1,"Souafle|Cognard|?",["Vif d’or","Beuglante","Rapeltout","Scrutoscope"],"Les balles du Quidditch."],
+["hpf",1,"Gare de King’s Cross|voie 9 ¾|?",["Poudlard Express","Magicobus","Chemin de Traverse","Pré-au-Lard"],"Le chemin de la rentrée à Poudlard."],
+["hpf",1,"Le dragon|le lac|?",["le labyrinthe","la Forêt interdite","le cimetière","la Chambre des secrets"],"Les trois tâches du Tournoi des Trois Sorciers."],
+["hpf",2,"La Coupe de feu|L’Ordre du Phénix|?|Les Reliques de la Mort",["Le Prince de sang-mêlé","Le Prisonnier d’Azkaban","La Chambre des secrets","L’Enfant maudit"],"La fin de la saga, dans l’ordre."],
+["hpf",2,"Godric Gryffondor|Helga Poufsouffle|Rowena Serdaigle|?",["Salazar Serpentard","Gellert Grindelwald","Nicolas Flamel","Merlin"],"Les quatre fondateurs de Poudlard."],
+["hpf",2,"Gryffondor : Nick Quasi-Sans-Tête|Serpentard : le Baron Sanglant|Poufsouffle : le Moine Gras|Serdaigle : ?",["la Dame Grise","Mimi Geignarde","Peeves","le professeur Binns"],"Les fantômes des maisons."],
+["hpf",2,"Bill|Charlie|Percy|Fred et George|?|Ginny",["Ron","Arthur","Fleur","Neville"],"Les enfants Weasley, de l’aîné à la cadette."],
+["hpf",2,"Quirrell|Lockhart|Lupin|?|Ombrage|Rogue",["Maugrey Fol Œil","Slughorn","Flitwick","Sirius Black"],"Les professeurs de défense contre les forces du Mal, année après année (le Maugrey de la 4e année est Croupton Jr déguisé)."],
+["hpf",2,"Dippet|Dumbledore|Rogue|?",["McGonagall","Slughorn","Flitwick","Ombrage"],"Les directeurs de Poudlard (Ombrage a aussi dirigé l’école un temps, avant Rogue)."],
+["hpf",2,"Lunard|Queudver|Patmol|?",["Cornedrue","Croûtard","Buck","Fumseck"],"Les surnoms des Maraudeurs."],
+["hpf",2,"Patmol : chien|Queudver : rat|Cornedrue : ?",["cerf","loup","chat","hibou"],"Les formes d’Animagus des Maraudeurs."],
+["hpf",2,"Gardien|Batteur|Poursuiveur|?",["Attrapeur","Buteur","Défenseur","Lanceur"],"Les postes d’une équipe de Quidditch."],
+["hpf",2,"Albus|Abelforth|?",["Ariana","Kendra","Aurelius","Perceval"],"Les trois enfants Dumbledore."],
+["hpf",2,"Harry : cerf|Hermione : loutre|Ron : ?",["chien","chat","lièvre","cheval"],"Les Patronus du trio (celui de Ron est un Jack Russell)."],
+["hpf",3,"Journal de Jedusor|bague de Gaunt|médaillon de Serpentard|?",["coupe de Poufsouffle","diadème de Serdaigle","Nagini","épée de Gryffondor"],"Les Horcruxes dans l’ordre de leur destruction."],
+["hpf",3,"Gardien : 1|Batteurs : 2|Poursuiveurs : ?|Attrapeur : 1",["3","2","4","5"],"La composition d’une équipe de Quidditch (7 joueurs)."],
+["hpf",3,"Tom Elvis Jedusor|anagramme|?",["Je suis Voldemort","Le Seigneur des Ténèbres","Le Prince de sang-mêlé","Lord Serpentard"],"L’anagramme révélée dans la Chambre des secrets."],
+["hpl",2,"Noise|Mornille|?",["Gallion","Doublon","Florin","Ducat"],"Les pièces des sorciers, de la plus petite à la plus grande."],
+["hpl",2,"James Sirius|Albus Severus|?",["Lily Luna","Rose","Hugo","Ariana"],"Les trois enfants de Harry et Ginny."],
+["hpl",3,"1 Gallion = 17 Mornilles|1 Mornille = ? Noises",["29","12","17","20"],"Le change de la monnaie des sorciers."],
+["hpl",3,"Antioch|Cadmus|?",["Ignotus","Marvolo","Salazar","Gellert"],"Les trois frères Peverell du Conte des trois frères."],
+["hpl",3,"Cedric : Suédois à museau court|Fleur : Vert gallois|Krum : Boutefeu chinois|Harry : ?",["Magyar à pointes","Norvégien à crête","Pansedefer ukrainien","Noir des Hébrides"],"Les dragons de la première tâche."],
+["hpl",4,"…|Ombrage|Rogue|?",["Amycus Carrow","Alecto Carrow","Slughorn","Yaxley"],"Les professeurs de défense contre les forces du Mal : en 7e année, c’est Amycus Carrow (sa sœur enseigne l’étude des Moldus)."],
+["hpl",4,"Albus|Perceval|Wulfric|?|Dumbledore",["Brian","Gellert","Abelforth","Aurelius"],"Le nom complet du directeur."],
+["fb",1,"Les Animaux fantastiques|Les Crimes de Grindelwald|?",["Les Secrets de Dumbledore","Les Reliques de la Mort","L’Enfant maudit","Le Prince de sang-mêlé"],"Les trois films de la série, dans l’ordre."],
+["fb",1,"Tina Goldstein|sa sœur ?",["Queenie","Leta","Seraphina","Bunty"],"Les sœurs Goldstein."],
+["fb",2,"Norbert Dragonneau|son frère ?",["Thésée","Jacob","Credence","Percival"],"Thésée Dragonneau, l’Auror, est le frère aîné de Norbert."],
+["fb",3,"Credence Barebone|?",["Aurelius Dumbledore","Corvus Lestrange","Gellert Grindelwald","Mattheus"],"La vraie identité de Credence, révélée par Grindelwald."],
+["fb",3,"New York|Paris|?",["Berlin","Prague","Rome","Moscou"],"Les villes principales de chaque film."]
+],
+sw:[
+["ori",1,"Un nouvel espoir|L’Empire contre-attaque|?",["Le Retour du Jedi","La Revanche des Sith","Le Réveil de la Force","Rogue One"],"La trilogie originale, dans l’ordre."],
+["ori",1,"Anakin Skywalker|?",["Dark Vador","Dark Sidious","Dark Maul","Dark Tyranus"],"Anakin devient Dark Vador."],
+["ori",1,"Obi-Wan : bleu|Yoda : vert|Dark Vador : rouge|Mace Windu : ?",["violet","jaune","blanc","orange"],"Les couleurs des sabres laser."],
+["ori",2,"Hoth|Dagobah|?",["Bespin","Endor","Jakku","Naboo"],"Les planètes de L’Empire contre-attaque, dans l’ordre."],
+["ori",2,"Tatooine|Dagobah|?",["Endor","Hoth","Bespin","Mustafar"],"Les planètes du Retour du Jedi, dans l’ordre."],
+["ori",2,"Luke (Épisode IV) : sabre bleu|Luke (Épisode VI) : sabre ?",["vert","violet","rouge","jaune"],"Luke construit son propre sabre, vert, avant Le Retour du Jedi."],
+["ori",2,"Padawan de Qui-Gon|maître d’Anakin|ermite sur Tatooine sous le nom de ?",["Ben","Owen","Biggs","Wedge"],"La vie d’Obi-Wan Kenobi, devenu « Ben »."],
+["ori",2,"Anakin perd son bras face à Dooku|Luke perd sa main face à ?",["Dark Vador","l’Empereur","Boba Fett","Jabba"],"Le père et le fils, mutilés en duel."],
+["ori",3,"Étoile de la Mort : Luke Skywalker|seconde Étoile de la Mort : Lando Calrissian|base Starkiller : ?",["Poe Dameron","Finn","Han Solo","Rey"],"Les pilotes qui détruisent les super-armes."],
+["pre",1,"La Menace fantôme|L’Attaque des clones|?",["La Revanche des Sith","Le Retour du Jedi","Un nouvel espoir","Les Derniers Jedi"],"La prélogie, dans l’ordre."],
+["pre",1,"Sénateur Palpatine|Chancelier Palpatine|?",["Empereur Palpatine","Dark Plagueis","Grand Moff Palpatine","Roi Palpatine"],"L’ascension de Palpatine."],
+["pre",1,"Jango Fett|?",["Boba Fett","Jar Jar Binks","Cad Bane","Zam Wesell"],"Boba est le clone, élevé comme un fils, de Jango."],
+["pre",1,"Padmé Amidala|ses jumeaux Luke et ?",["Leia","Rey","Ahsoka","Jyn"],"Les enfants de Padmé et Anakin."],
+["pre",2,"Dooku|Qui-Gon Jinn|Obi-Wan Kenobi|?",["Anakin Skywalker","Luke Skywalker","Mace Windu","Ki-Adi-Mundi"],"La lignée de maîtres et d’apprentis : Dooku forme Qui-Gon, qui forme Obi-Wan, qui forme Anakin."],
+["pre",2,"Dark Maul|Dark Tyranus|?",["Dark Vador","Dark Plagueis","Dark Bane","Kylo Ren"],"Les apprentis successifs de Dark Sidious."],
+["pre",2,"Reine Amidala|?",["Sénatrice Amidala","Chancelière Amidala","Impératrice Amidala","Générale Amidala"],"Padmé quitte le trône de Naboo pour le Sénat."],
+["pre",3,"Dark Plagueis|Dark Sidious|?",["Dark Maul","Dark Vador","Kylo Ren","Snoke"],"La lignée des Sith : Plagueis forme Sidious, qui prend Maul comme premier apprenti."],
+["seq",1,"Le Réveil de la Force|Les Derniers Jedi|?",["L’Ascension de Skywalker","Le Retour du Jedi","Solo","Rogue One"],"La postlogie, dans l’ordre."],
+["seq",1,"Ben Solo|?",["Kylo Ren","Snoke","Hux","Phasma"],"Le fils de Han et Leia devient Kylo Ren."],
+["seq",2,"Anakin Skywalker|sa fille Leia Organa|son petit-fils ?",["Ben Solo","Luke Skywalker","Rey","Poe Dameron"],"Trois générations de Skywalker."],
+["seq",2,"Étoile de la Mort|seconde Étoile de la Mort|?",["base Starkiller","Executor","Supremacy","Ghost"],"Les super-armes capables de détruire des planètes."],
+["seq",2,"Princesse Leia|?",["Générale Organa","Reine Leia","Chancelière Organa","Impératrice Leia"],"Leia mène la Résistance dans la postlogie."],
+["seq",3,"Jedha|Eadu|?",["Scarif","Yavin 4","Hoth","Crait"],"Les planètes de Rogue One, dans l’ordre."],
+["seq",3,"Canto Bight|le Supremacy|?",["Crait","Hoth","Exegol","Scarif"],"La fin des Derniers Jedi."],
+["seq",3,"Rey (fin de L’Ascension de Skywalker) : sabre ?",["jaune","bleu","vert","violet"],"Rey construit son propre sabre, à la lame jaune."],
+["seq",3,"Pasaana|Kijimi|Kef Bir|Ahch-To|?",["Exegol","Jakku","Mustafar","Crait"],"Le voyage de Rey dans L’Ascension de Skywalker."],
+["seq",4,"Yavin 4|Hoth|D’Qar|Crait|?",["Ajan Kloss","Dantooine","Scarif","Takodana"],"Les bases successives des Rebelles puis de la Résistance."]
+]};
+for(const id in SUITES)if(WORLDS[id])WORLDS[id].EMOJI=SUITES[id].map(([u,l,seq,o,ex])=>{const d=[l,seq,o,ex];d.u=u;return d});
+const suiteHtml=d=>`<div class="suite" role="group" aria-label="Suite logique">${d[1].split("|").map((t,i,a)=>`<span class="st ${t.includes("?")?"gap":""}">${t.replace("?","<b>?</b>")}</span>${i<a.length-1?`<i aria-hidden="true">›</i>`:""}`).join("")}</div><p class="q" style="text-align:center">Quel terme manque ?</p>`;
+
 /* ===== Animations : intro, entractes, petits effets ===== */
 let CINE=null;
 const AF=typeof globalThis.__AF==="number"?globalThis.__AF:1;
@@ -4508,7 +4629,7 @@ function joker(){
 if(!G||!G.qs||!(G.jok>0))return;const {type,d}=G.qs[G.i],st=G.st;if(st.jk===st.step+":"+type)return;
 let sel="",good=-1;
 if(type==="qcm")good=st.o.indexOf(d[2][0]);
-else if(type==="emoji")good=st.fo.indexOf(d[2]);
+else if(type==="emoji")good=st.o.indexOf(d[2][0]);
 else if(type==="quote"){if(st.step===-1){sel="#zone0 ";good=st.ko.indexOf(d.k)}else if(st.step===0){sel="#zone ";good=st.o.indexOf(d[2])}else{sel="#zone2 ";good=st.fo2.indexOf(d[3])}}
 else return;
 const bs=[...document.querySelectorAll(sel+".opt")];if(bs.length<3||bs.some(b=>b.disabled))return;
@@ -5148,7 +5269,7 @@ const MODES=[
 {id:"who",name:"Qui suis-je ?",desc:"Cinq indices, réponse libre. Moins vous en lisez, plus vous marquez.",n:6},
 {id:"liste",name:"Le grand inventaire",desc:"Une minute pour citer un maximum de noms sur un thème.",n:0},
 {id:"quote",name:"Le jeu des répliques",desc:"Qui l’a dit, et dans quelle œuvre ?",n:8},
-{id:"emoji",name:"Scènes en émojis",desc:"Reconnaissez la scène, retrouvez l’œuvre.",n:10},
+{id:"emoji",name:"Suites logiques",desc:"Une suite de personnages, de lieux ou d’objets, un terme manque : trouvez-le.",n:10},
 {id:"chrono",name:"Chronologie",desc:"Remettez quatre moments dans l’ordre.",n:5},
 {id:"vf",name:"Vrai ou faux",desc:"Anecdotes et pièges.",n:10},
 {id:"surv",name:"Survie",desc:"Trois vies, des questions de plus en plus dures. Jusqu’où irez-vous ?",n:0},
@@ -5159,7 +5280,7 @@ const MX=q=>q.type==="quote"&&q.d.k?3:MAXP[q.type];
 /* questions de coulisses (acteurs, tournage…) : réservées aux « Secrets de tournage » */
 const RXM=/(qui (joue|jouait|incarne|interprète|prête)|joué par|jouée par|interprét|incarn|acteur|actrice|comédien|casting|tournage|tourné|réalis|doublure|doubleur|sa voix|voix (en|originale)|en VO|studio|oscar|nomin|figurant|costum|maquill|cascad|compositeur|Howard Shore|John Williams|bande originale|box-office|Peter Jackson|Nouvelle-Zélande|Weta|prothès|perruque|effets spéciaux|plateau|scène coupée|caméo|sortie? en salle|sorti en \d|premier rôle)/i;
 const isMeta=d=>!!d[4]||RXM.test(d[1]);
-const KIND={liste:"Le grand inventaire",qcm:"Culture générale",quote:"Réplique",emoji:"Scène en émojis",who:"Qui suis-je ?",chrono:"Chronologie",vf:"Vrai ou faux"};
+const KIND={liste:"Le grand inventaire",qcm:"Culture générale",quote:"Réplique",emoji:"Suite logique",who:"Qui suis-je ?",chrono:"Chronologie",vf:"Vrai ou faux"};
 const wrap=(type,arr)=>arr.map(d=>({type,d}));
 const POOL={qcm:()=>wrap("qcm",W.QCM.filter(d=>!isMeta(d))),quote:()=>wrap("quote",W.QUOTES),emoji:()=>wrap("emoji",W.EMOJI),who:()=>wrap("who",W.WHO),chrono:()=>wrap("chrono",W.CHRONO),vf:()=>wrap("vf",W.VF.filter(d=>!isMeta(d))),
 secret:()=>[...wrap("qcm",W.QCM.filter(isMeta)),...wrap("vf",W.VF.filter(isMeta))]};
@@ -5217,6 +5338,7 @@ app.innerHTML=`<div class="top wtop"><button class="btn ghost" data-act="worlds"
 <h1>${W.title}</h1>${ORN}
 <p class="sub">${W.sub}</p>
 <div class="modes">${card(MID("duel"),'<span class="tag">2 à 7</span>')}
+<button class="mode big" data-act="voyOnline" style="--c:#7a3fae">${shieldSvg("med","#7a3fae",`<g transform="translate(12 12)"><path d="M4 30L14 8l8 14 6-8 8 16z" fill="#f6efd9"/><circle cx="30" cy="8" r="4" fill="#f6efd9"/></g>`,"sg-voyo")}<div><b>Grand voyage en ligne</b><span>Les huit étapes du voyage, de la culture générale au grand inventaire, contre vos amis : de 2 à 7 joueurs, chacun sur son téléphone.</span></div><span class="tag">En ligne</span></button>
 <button class="mode big" data-act="solo" style="--c:#3f7fae">${shieldSvg("med","#3f7fae",`<g transform="translate(10.5 12) scale(.9)"><circle cx="24" cy="14" r="7" fill="#f6efd9"/><path d="M10 42c1-10 7-17 14-17s13 7 14 17z" fill="#f6efd9"/><path d="M24 4l2 4 4 .5-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.5z" fill="#ffe39a" transform="translate(0 -4) scale(1 .9)"/></g>`,"sg-solo")}
 <div><b>Jeu solo</b><span>Le Grand voyage d’une traite, ou chaque jeu à votre rythme.</span></div></button>
 <button class="mode big roue-card" data-act="roue" style="--c:#e2b04a">${rLogo(64)}<div><b>La Roue des savoirs</b><span>Le grand jeu de plateau : dé, six thèmes, six parts à gagner et une question finale. De 2 à 6 joueurs, chacun sur son téléphone.</span></div><span class="tag">Nouveau</span></button>
@@ -5256,7 +5378,7 @@ for(let k=0;k<n&&pool.length;k++){const t=n>1?a+(b-a)*k/(n-1):a;let bi=0,bd=9;po
 out.forEach(x=>used&&used.add(x.d));
 return out.map((x,i)=>[x,i]).sort((p,q)=>p[0].d[0]-q[0].d[0]||p[1]-q[1]).map(p=>p[0]);
 }
-const VOYAGE=[["qcm",10,"Culture générale"],["quote",3,"Le jeu des répliques"],["emoji",3,"Scènes en émojis"],["who",3,"Qui suis-je ?"],["chrono",3,"Chronologie"],["vf",3,"Vrai ou faux"],["secret",3,"Secrets de tournage"],["liste",1,"Le grand inventaire"]];
+const VOYAGE=[["qcm",10,"Culture générale"],["quote",3,"Le jeu des répliques"],["emoji",3,"Suites logiques"],["who",3,"Qui suis-je ?"],["chrono",3,"Chronologie"],["vf",3,"Vrai ou faux"],["secret",3,"Secrets de tournage"],["liste",1,"Le grand inventaire"]];
 function pickLvl(items,n,lvl){
 if(!lvl)return sh(items).slice(0,n);
 const d=x=>Math.abs(x.d[0]-lvl)+(x.d[0]<lvl?.5:0);
@@ -5311,7 +5433,7 @@ const {type,d}=G.qs[G.i];G.st={};
 let body="";
 if(type==="qcm"){G.st.o=sh(d[2]);body=`<p class="q">${d[1]}</p>${optBtns(G.st.o,"two")}`}
 if(type==="vf"){G.st.o=["Vrai","Faux"];body=`<p class="q">${d[1]}</p>${optBtns(G.st.o,"two")}`}
-if(type==="emoji"){G.st.fo=filmOpts(d,d[2]);body=`<div class="emo" role="img" aria-label="Rébus en émojis">${d[1]}</div><p class="q" style="text-align:center">${W.U[d.u].q1}</p>${optBtns(G.st.fo.map(i=>W.U[d.u].films[i]))}`}
+if(type==="emoji"){G.st.o=sh(d[2]);body=suiteHtml(d)+optBtns(G.st.o,"two")}
 if(type==="liste")return showInv();
 if(type==="quote"){G.st.step=d.k?-1:0;G.st.o=sh([d[2],...sh(W.U[d.u].names.filter(x=>x!==d[2])).slice(0,3)]);
 if(d.k){G.st.ko=sh([d.k,...keyOpts(d)]);body=`<p class="quote" id="qt">${gapQ(d,false)}</p><p class="kind" style="margin-top:16px">Quel mot manque ?</p><div id="zone0">${optBtns(G.st.ko,"two")}</div>`}
@@ -5394,7 +5516,7 @@ function answer(k){
 const {type,d}=G.qs[G.i],st=G.st;
 if(type==="qcm"){const g=st.o.indexOf(d[2][0]),ok=k===g;if(ok)G.score++;lock("",g,k);feedback(ok,ok?"Bien vu !":"Raté.",ok?d[3]:`La réponse était : ${d[2][0]}.${N(d[3])===N(d[2][0])?"":" "+d[3]}`)}
 if(type==="vf"){const g=d[2]?0:1,ok=k===g;if(ok)G.score++;lock("",g,k);feedback(ok,ok?"Exact !":"Eh non.",`C’est ${d[2]?"vrai":"faux"}. ${d[3]}`)}
-if(type==="emoji"){const g=st.fo.indexOf(d[2]),ok=k===g;if(ok)G.score++;lock("",g,k);feedback(ok,ok?"Reconnu !":"Pas celui-là.",`${d[3]} (${W.U[d.u].films[d[2]]})`)}
+if(type==="emoji"){const g=st.o.indexOf(d[2][0]),ok=k===g;if(ok)G.score++;lock("",g,k);feedback(ok,ok?"Bien trouvé !":"Raté.",`${ok?"":`Il manquait : ${d[2][0]}. `}${d[3]}`)}
 if(type==="quote"&&st.step===-1){const g=st.ko.indexOf(d.k),ok=k===g;if(ok)G.score++;lock("#zone0",g,k);fx(ok);
 document.getElementById("qt").innerHTML=gapQ(d,true);
 document.getElementById("zone0").insertAdjacentHTML("afterend",`<p class="kind" style="margin-top:18px">${ok?`Bien vu, c’est « ${d.k} ».`:`Le mot manquant : « ${d.k} ».`} Qui parle ?</p><div id="zone">${optBtns(st.o,"two")}</div>`);
@@ -5503,15 +5625,15 @@ ${missed.length?`<p class="kind" style="margin-top:20px">Il manquait</p><div cla
    Laissées vides, la page utilise la salle en direct de claude.ai quand elle y est ouverte. */
 const SUPABASE_URL="https://hgybqstgljfeulobtkxc.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable__y6Pa4Wug2CSEBFNYN16UA_XE1OjxHj";
-const DVOY=[["qcm",4,"Culture générale"],["quote",2,"Répliques"],["emoji",2,"Scènes en émojis"],["who",2,"Qui suis-je"],["chrono",1,"Chronologie"],["vf",2,"Vrai ou faux"],["secret",2,"Secrets de tournage"],["liste",1,"Le grand inventaire"]];
+const DVOY=VOYAGE;
 const DQ=20,DMAX=7,TOPICS=["hello","roster","start","next","ans","end"];
 const TQ={qcm:20,vf:15,emoji:20,quote:40,who:75,chrono:35,liste:60};
-const DMODES=[["mixd","Mélange"],["voy","Grand voyage"],["qcm","Culture générale"],["quote","Répliques"],["who","Qui suis-je"],["emoji","Émojis"],["chrono","Chronologie"],["vf","Vrai ou faux"],["secret","Secrets de tournage"],["liste","Inventaire"]];
+const DMODES=[["voy","Grand voyage"],["mixd","Mélange"],["qcm","Culture générale"],["quote","Répliques"],["who","Qui suis-je"],["emoji","Suites logiques"],["chrono","Chronologie"],["vf","Vrai ou faux"],["secret","Secrets de tournage"],["liste","Inventaire"]];
 const DCOUNT={liste:3,who:6,quote:8,chrono:6};
 const dCount=m=>m==="voy"?DVOY.reduce((s,x)=>s+x[1],0):DCOUNT[m]||10;
 const ARRF=t=>({qcm:W.QCM,vf:W.VF,emoji:W.EMOJI,quote:W.QUOTES,who:W.WHO,chrono:W.CHRONO,liste:W.THEMES})[t];
 const invThemes=()=>W.THEMES.map((t,i)=>i).filter(i=>!/acteur|actrice|interpr/i.test(W.THEMES[i][0]));
-const D={pid:Math.random().toString(36).slice(2,10),players:{},order:[],mode:"mixd",lvl:0,i:-1,uni:"sda"};
+const D={pid:Math.random().toString(36).slice(2,10),players:{},order:[],mode:"voy",lvl:0,i:-1,uni:"sda"};
 try{D.name=localStorage.getItem("sda-name")||""}catch(e){D.name=""}
 const unwrap=m=>m&&typeof m==="object"&&!("pid" in m)&&m.data&&typeof m.data==="object"?m.data:m;
 const loadScript=src=>new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)});
@@ -5658,7 +5780,7 @@ dq();
 /* Ordre des options, choisi par l’hôte pour que tout le monde voie la même chose */
 function dOrder(type,d){
 if(type==="qcm")return sh([0,1,2,3]);
-if(type==="emoji")return filmOpts(d,d[2]);
+if(type==="emoji")return sh([0,1,2,3]);
 if(type==="quote")return {ko:d.k?sh([d.k,...keyOpts(d)]):null,o:sh([d[2],...sh(W.U[d.u].names.filter(x=>x!==d[2])).slice(0,3)]),fo:filmOpts(d,d[3])};
 if(type==="chrono")return sh([0,1,2,3]);
 return null;
@@ -5670,11 +5792,11 @@ const [type,idx,order]=D.qs[D.i],d=ARRF(type)[idx],U=W.U;
 D.answered=false;D.t0=Date.now();D.qt=TQ[type]||DQ;D.s={};
 let body="",kind=type==="liste"?`${KIND.liste}`:`${dots(d[0])}${KIND[type]} <span class="utag u-${d.u}">${U[d.u].short}</span>`;
 if(type==="qcm"||type==="vf"||type==="emoji"){
-const fo=type==="emoji"?(order||filmOpts(d,d[2])):null;
-const opts=type==="qcm"?order.map(o=>d[2][o]):type==="vf"?["Vrai","Faux"]:fo.map(i=>U[d.u].films[i]);
-D.good=type==="qcm"?order.indexOf(0):type==="vf"?(d[2]?0:1):fo.indexOf(d[2]);
-body=(type==="emoji"?`<div class="emo" role="img" aria-label="Rébus en émojis">${d[1]}</div><p class="q" style="text-align:center">${U[d.u].q1}</p>`:`<p class="q">${d[1]}</p>`)+
-`<div class="opts ${type==="vf"?"two":""}">${opts.map((t,k)=>`<button class="opt" data-dopt="${k}">${t}</button>`).join("")}</div>`}
+const ord=type==="vf"?null:(order||[0,1,2,3]);
+const opts=type==="vf"?["Vrai","Faux"]:ord.map(o=>d[2][o]);
+D.good=type==="vf"?(d[2]?0:1):ord.indexOf(0);
+body=(type==="emoji"?suiteHtml(d):`<p class="q">${d[1]}</p>`)+
+`<div class="opts ${type==="qcm"?"":"two"}">${opts.map((t,k)=>`<button class="opt" data-dopt="${k}">${t}</button>`).join("")}</div>`}
 if(type==="quote"){const o=order||dOrder(type,d);D.s={o,pts:0,step:o.ko?-1:0,max:o.ko?3:2};
 body=o.ko?`<p class="quote" id="qt">${gapQ(d,false)}</p><p class="kind" style="margin-top:16px">Quel mot manque ?</p><div id="dz0">${dOpts(o.ko,"dq","two")}</div>`
 :`<p class="quote">${d[1]}</p><p class="kind" style="margin-top:16px">Qui parle ?</p><div id="dz1">${dOpts(o.o,"dq","two")}</div>`}
@@ -5719,7 +5841,7 @@ function duelAnswer(k){
 if(D.answered||!D.inGame)return;
 const [type,idx]=D.qs[D.i],d=ARRF(type)[idx],U=W.U,ok=k===D.good;
 document.querySelectorAll("[data-dopt]").forEach((b,i)=>{b.disabled=true;if(i===D.good)b.classList.add("ok");else if(i===k)b.classList.add("ko")});
-const ex=type==="emoji"?`${d[3]} (${U[d.u].films[d[2]]})`:type==="vf"?`C’est ${d[2]?"vrai":"faux"}. ${d[3]}`:ok?d[3]:`La réponse était : ${d[2][0]}. ${d[3]}`;
+const ex=type==="emoji"?`${ok?"":`Il manquait : ${d[2][0]}. `}${d[3]}`:type==="vf"?`C’est ${d[2]?"vrai":"faux"}. ${d[3]}`:ok?d[3]:`La réponse était : ${d[2][0]}. ${d[3]}`;
 dFinish(ok?1:0,ok,ok?"+1 point.":k<0?"Temps écoulé.":"Raté.",ex);
 }
 /* Répliques : mot manquant, personnage, film */
@@ -5833,6 +5955,7 @@ if(e.target.id==="listF")listGuess(document.getElementById("listI").value);
 app.addEventListener("click",e=>{
 const rn=e.target.closest("[data-rn]");if(rn&&G&&G.roue)return rAct({a:"move",n:rn.dataset.rn});
 const t=e.target.closest("button");if(!t||t.disabled||t.form)return;
+if(t.dataset.act==="voyOnline"){D.mode="voy";return duelEnter()}
 if(t.dataset.rw)return rWorld(t.dataset.rw);
 if(t.dataset.rm)return roueMode(t.dataset.rm);
 if(t.dataset.lrm!=null){rLocalSync();RG.lnames.splice(+t.dataset.lrm,1);return rLocalForm()}
