@@ -207,6 +207,12 @@ body[data-w=sw] .cine .ct{text-shadow:0 2px 0 #1a0f08,0 0 30px rgba(255,170,90,.
 .dgrid span{width:26px;height:26px;font-size:14px;border-radius:6px;display:grid;place-items:center;font-weight:700;color:#fff;animation:pop .45s cubic-bezier(.2,1.6,.4,1) both}
 .dgrid .ok{background:#2e7a3a}.dgrid .ko{background:#a8321f}
 /* La Roue des savoirs */
+.rland{margin:22px auto 0;max-width:640px;padding:16px;border-radius:14px;border:1px solid rgba(226,176,74,.55);background:linear-gradient(160deg,rgba(60,40,20,.85),rgba(25,18,10,.9));color:#f3e6c4;text-align:start}
+.rlhead svg{flex:none}
+.rlhead{display:flex;gap:12px;align-items:center;position:relative}.rlhead b{font-family:Cinzel,serif;font-size:20px;color:#ffd987;display:block}.rlhead span{font-size:14px;line-height:1.35}
+.rlhead .tag{position:absolute;top:-8px;right:-4px;font-size:12px;line-height:1.6;color:#ffe9b8;background:var(--blood);border:1px solid var(--gold);border-radius:999px;padding:0 9px;font-family:Cinzel,serif;font-weight:700}.rlhead>div{padding-right:58px}
+.rlbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.rlbtns .btn{flex:1 1 140px;font-size:14px}
+
 .rboard{display:block;width:100%;max-width:440px;margin:4px auto 0;touch-action:manipulation}
 .rboard .rhl{cursor:pointer}.rboard .rring{fill:none;stroke:#fff6d8;stroke-width:2.5;animation:rpulse 1s ease-in-out infinite}
 @keyframes rpulse{50%{stroke-opacity:.25}}
@@ -5154,10 +5160,12 @@ const card=(m,extra="",big=true)=>{const b=bestOf(m.id);return `<button class="m
 ${extra}${med(m.id)}<div><b>${m.name}</b><span>${m.desc}</span>${b!=null?`<small>Record : ${b}${m.id==="liste"?" noms":m.id==="surv"?" bonnes réponses":" %"}</small>`:""}</div></button>`};
 const MID=id=>MODES.find(x=>x.id===id);
 function worlds(){
-cineKill();stop();duelLeave();G=null;document.body.dataset.w="";document.title="Le Grimoire des quiz";
+cineKill();stop();duelLeave();roueLeave();G=null;document.body.dataset.w="";document.title="Le Grimoire des quiz";
 document.getElementById("note").textContent="Sites de fans non officiels, gratuits et sans lien avec les ayants droit.";
 app.innerHTML=`<div class="landing"><h1>Le Grimoire des quiz</h1>${ORN}<p class="sub">${["","Un monde","Deux mondes","Trois mondes","Quatre mondes"][Object.keys(WORLDS).length]||"Des mondes"}, plus de ${Math.floor(Object.values(WORLDS).reduce((t,w)=>t+w.QCM.length+w.VF.length+w.QUOTES.length+w.EMOJI.length+w.WHO.length+w.CHRONO.length,0)/100)*100} questions, de Facile à Expert. Où partez-vous ?</p>
-<div class="worlds">${Object.values(WORLDS).map(w=>`<button class="world" data-w="${w.id}"><span class="wpic">${w.heroSvg()}</span><span class="wtxt"><b>${w.name}</b><span>${w.blurb}</span></span></button>`).join("")}</div></div>`;
+<div class="worlds">${Object.values(WORLDS).map(w=>`<button class="world" data-w="${w.id}"><span class="wpic">${w.heroSvg()}</span><span class="wtxt"><b>${w.name}</b><span>${w.blurb}</span></span></button>`).join("")}</div>
+<div class="rland"><div class="rlhead">${rLogo(56)}<div><b>La Roue des savoirs</b><span>Le grand jeu de plateau en ligne : dé, six thèmes, six parts à gagner, puis la question finale au centre. De 2 à 6 joueurs, chacun sur son téléphone.</span></div><span class="tag">Nouveau</span></div>
+<div class="rlbtns">${Object.values(WORLDS).map(w=>`<button class="btn" data-rw="${w.id}">${w.name}</button>`).join("")}</div></div></div>`;
 window.scrollTo({top:0});
 }
 function setWorld(id){W=WORLDS[id];document.body.dataset.w=id;document.title=W.title;document.getElementById("note").textContent=W.note;
@@ -5784,6 +5792,7 @@ if(e.target.id==="listF")listGuess(document.getElementById("listI").value);
 app.addEventListener("click",e=>{
 const rn=e.target.closest("[data-rn]");if(rn&&G&&G.roue)return rAct({a:"move",n:rn.dataset.rn});
 const t=e.target.closest("button");if(!t||t.disabled||t.form)return;
+if(t.dataset.rw){setWorld(t.dataset.rw);return roueEnter()}
 if(t.dataset.rl!=null){RG.lvl=+t.dataset.rl;rRoster();return rLobby()}
 if(t.dataset.rc)return rAct({a:"pick",c:t.dataset.rc});
 if(t.dataset.act&&/^r(invite|start|roll|ok|ko|skip|again|back|oue)$/.test(t.dataset.act)){const a=t.dataset.act;
