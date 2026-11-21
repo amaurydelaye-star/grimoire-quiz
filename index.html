@@ -206,6 +206,31 @@ body[data-w=sw] .cine .ct{text-shadow:0 2px 0 #1a0f08,0 0 30px rgba(255,170,90,.
 .dgrid{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin:14px 0 6px}
 .dgrid span{width:26px;height:26px;font-size:14px;border-radius:6px;display:grid;place-items:center;font-weight:700;color:#fff;animation:pop .45s cubic-bezier(.2,1.6,.4,1) both}
 .dgrid .ok{background:#2e7a3a}.dgrid .ko{background:#a8321f}
+/* La Roue des savoirs */
+.rboard{display:block;width:100%;max-width:440px;margin:4px auto 0;touch-action:manipulation}
+.rboard .rhl{cursor:pointer}.rboard .rring{fill:none;stroke:#fff6d8;stroke-width:2.5;animation:rpulse 1s ease-in-out infinite}
+@keyframes rpulse{50%{stroke-opacity:.25}}
+.rboard .rtok{transition:transform .5s cubic-bezier(.3,1.3,.5,1)}.rboard .rtok.act>circle:last-child{stroke-dasharray:3 2;animation:rspin 3s linear infinite}
+@keyframes rspin{to{stroke-dashoffset:-30}}
+.rgame .rmsg{text-align:center;font-family:Cinzel,serif;font-weight:700;color:var(--blood);min-height:1.4em;margin:0}
+.rpanel{text-align:center;margin:10px 0}
+.rbig{font-size:20px;padding:14px 28px}
+.rdie{font-size:64px;line-height:1;animation:rroll .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes rroll{0%{transform:rotate(-200deg) scale(.4);opacity:0}100%{transform:none;opacity:1}}
+.rpick{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rpick .opt{display:flex;gap:8px;align-items:center;text-align:start;font-size:15px}.rpick .opt i{flex:none;width:16px;height:16px;border-radius:50%;background:var(--rc)}
+.rcard{text-align:start;border-radius:12px;border:2px solid var(--rc);background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 22%,transparent),transparent 70%);padding:12px 14px;animation:rcin .45s cubic-bezier(.2,1.3,.4,1)}
+@keyframes rcin{from{transform:translateY(14px) scale(.96)}}
+.rcard .rth{margin:0 0 6px;font-family:Cinzel,serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--rc) 70%,#000)}
+.rcard .rq{font-size:20px;line-height:1.35;margin:0 0 10px}
+.rans{background:rgba(255,250,235,.7);border:1px dashed rgba(0,0,0,.3);border-radius:8px;padding:8px 10px;margin-bottom:8px}.rans small{color:var(--mute)}
+.rlast{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,.06);font-size:14px}
+.rlast span{flex:none;width:12px;height:12px;border-radius:50%;margin-top:4px}.rlast p{margin:0}.rlast.ok b{color:var(--ok)}.rlast.ko b{color:var(--blood)}
+.rlegend{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;margin:10px 0;font-size:14px}.rlegend span{display:inline-flex;align-items:center;gap:6px}.rlegend i{width:12px;height:12px;border-radius:50%}
+.rdot{display:inline-block;width:18px;height:18px;border-radius:50%;border:2px solid #000;margin-right:6px}.rdot.free{border-style:dashed;opacity:.4}
+.rrules{text-align:start;margin-top:12px}.rrules summary{cursor:pointer;font-family:Cinzel,serif;font-weight:700}
+.rwin{text-align:center}.rwin h2{margin:8px 0 4px}
+.rsmall{font-size:13px;padding:6px 12px;min-height:0}
+.roue-card svg{flex:none}
 /* ===== Animations ===== */
 .cine{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px 18px 70px;overflow:auto;cursor:pointer;
 background:radial-gradient(ellipse at 50% 38%,rgba(120,60,20,.55),transparent 60%),radial-gradient(ellipse at 50% 120%,rgba(158,42,32,.5),transparent 60%),#0d0806f2;animation:cfade .35s ease-out both;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
@@ -4554,6 +4579,522 @@ app.innerHTML=`${ring(Math.min(1,n/40),"ring")}<section class="card end"><p clas
 window.scrollTo({top:0});
 }
 
+/* ===== La Roue des savoirs : questions ouvertes, Terre du Milieu ===== */
+/* [thème, niveau, question, réponse] — thèmes : bleu, rose, jaune, marron, vert, orange */
+const ROUE_ME=[
+["rose",1,"Quelle est la capitale du Gondor ?","Minas Tirith"],
+["rose",1,"Comment s’appelle la demeure de Bilbon ?","Cul-de-Sac"],
+["rose",1,"Dans quelle région de la Terre du Milieu vivent les hobbits ?","La Comté"],
+["rose",1,"Quelle cité elfique est dirigée par Elrond ?","Fondcombe"],
+["rose",1,"Quelle est la capitale du Rohan ?","Edoras"],
+["rose",1,"Comment s’appelle la tour de Saroumane ?","Orthanc"],
+["rose",1,"Quelle montagne Smaug occupe-t-il ?","Erebor, la Montagne Solitaire"],
+["rose",1,"Sur quelle île-royaume des hommes règne Míriel ?","Númenor"],
+["rose",2,"Quel bois elfique est gouverné par Galadriel et Celeborn ?","La Lórien"],
+["rose",2,"Comment s’appelle la forteresse de Sauron ?","Barad-dûr"],
+["rose",2,"Quelle forteresse du Rohan est assiégée dans Les Deux Tours ?","Le Gouffre de Helm"],
+["rose",2,"Quelle ancienne cité naine la Communauté traverse-t-elle ?","La Moria"],
+["rose",2,"Dans quel village se trouve l’auberge du Poney Fringant ?","Bree"],
+["rose",2,"Quelle forêt abrite Sylvebarbe ?","Fangorn"],
+["rose",2,"Quelle ville en ruines sur l’Anduin est disputée entre le Gondor et le Mordor ?","Osgiliath"],
+["rose",2,"Sur quel mont Frodon est-il poignardé par le Roi-Sorcier ?","Le Mont Venteux"],
+["rose",2,"Quel fleuve la Communauté descend-elle en barques ?","L’Anduin"],
+["rose",2,"Quelle montagne enneigée repousse la Communauté ?","Le Caradhras"],
+["rose",2,"Comment s’appellent les champs de la grande bataille devant Minas Tirith ?","Les champs du Pelennor"],
+["rose",2,"Quelle ville est bâtie sur le lac au pied d’Erebor ?","Lacville"],
+["rose",2,"Quelle forêt la compagnie de Thorin traverse-t-elle avant d’être capturée par les elfes ?","La Forêt Noire"],
+["rose",2,"Quelles montagnes abritent la ville des gobelins ?","Les Monts Brumeux"],
+["rose",2,"Quel royaume elfique gouverne Gil-galad ?","Le Lindon"],
+["rose",2,"Comment s’appelle le royaume nain de Durin dans la série ?","Khazad-dûm"],
+["rose",2,"Comment s’appellent les Terres du Sud après l’éruption de la Montagne du Destin ?","Le Mordor"],
+["rose",2,"Quel royaume des hommes a pour emblème l’Arbre blanc ?","Le Gondor"],
+["rose",2,"Où Gollum vivait-il quand Bilbon l’a rencontré ?","Dans une caverne des Monts Brumeux, au bord d’un lac souterrain"],
+["rose",3,"Où la Communauté se sépare-t-elle ?","À Amon Hen"],
+["rose",3,"Quelles chutes marquent la fin de la descente en barques ?","Les chutes de Rauros"],
+["rose",3,"Comment s’appelle la porte principale du Mordor ?","La Porte Noire"],
+["rose",3,"Quelle cité du Roi-Sorcier, à la lumière verdâtre, fait face à Osgiliath ?","Minas Morgul"],
+["rose",3,"Quel col infesté d’araignées mène au Mordor ?","Cirith Ungol"],
+["rose",3,"Quel chemin Aragorn emprunte-t-il pour rallier l’armée des morts ?","Les Chemins des Morts"],
+["rose",3,"Quelle cité portuaire du Gondor est attaquée par les Corsaires ?","Pelargir"],
+["rose",3,"Dans quels marais flottent des visages de morts ?","Les Marais des Morts"],
+["rose",3,"De quel port les elfes partent-ils vers l’Ouest ?","Les Havres Gris"],
+["rose",3,"Quelle cité en ruines se trouve entre Erebor et Lacville ?","Dale"],
+["rose",3,"Quelle forteresse en ruine abrite le Nécromancien ?","Dol Guldur"],
+["rose",3,"Sur quelle colline Thorin affronte-t-il Azog ?","La Colline aux Corbeaux"],
+["rose",3,"D’où vient l’armée naine de Dáin ?","Des Monts de Fer"],
+["rose",3,"Comment s’appelle la région des elfes forgerons de Celebrimbor ?","L’Eregion"],
+["rose",3,"Quelle rivière Arwen soulève-t-elle contre les Nazgûl ?","La Bruinen"],
+["rose",3,"Quelle région de la Comté produit la meilleure herbe à pipe ?","Le Quartier Sud"],
+["rose",3,"Comment s’appelle la capitale de Númenor ?","Armenelos"],
+["rose",4,"Quel est le nom elfique de Fondcombe ?","Imladris"],
+["rose",4,"Sur quel plateau du Mordor se dresse la Montagne du Destin ?","Le plateau de Gorgoroth"],
+["rose",4,"Comment s’appelle la terre bénie de l’Ouest où partent les elfes ?","Valinor"],
+["rose",4,"Quel est l’autre nom de la Montagne du Destin ?","Orodruin"],
+["rose",4,"Quel est l’autre nom du Mont Venteux ?","Amon Sûl"],
+["vert",1,"À quel peuple appartient Gimli ?","Les nains"],
+["vert",1,"À quel peuple appartient Legolas ?","Les elfes"],
+["vert",1,"Quels arbres vivants gardent la forêt de Fangorn ?","Les Ents"],
+["vert",1,"Quels oiseaux géants sauvent Frodon et Sam ?","Les Aigles"],
+["vert",1,"Quel dragon habite Erebor ?","Smaug"],
+["vert",1,"Combien y a-t-il de Nazgûl ?","Neuf"],
+["vert",1,"En quel animal Beorn peut-il se transformer ?","En ours"],
+["vert",2,"Comment s’appelle le démon de feu de la Moria ?","Le Balrog"],
+["vert",2,"Comment s’appelle l’araignée géante qui attaque Frodon ?","Arachne"],
+["vert",2,"Quels énormes animaux de guerre combattent pour le Mordor au Pelennor ?","Les Oliphants"],
+["vert",2,"Comment s’appellent les orques améliorés de Saroumane ?","Les Uruk-hai"],
+["vert",2,"Quels loups monstrueux montent les orques ?","Les wargs"],
+["vert",2,"Comment s’appelle le chef des Ents ?","Sylvebarbe"],
+["vert",2,"Quel peuple capture la compagnie sous les Monts Brumeux ?","Les gobelins"],
+["vert",2,"Comment s’appelle le cheval de Gandalf ?","Gripoil"],
+["vert",2,"Quels animaux tirent le traîneau de Radagast ?","Des lapins de Rhosgobel"],
+["vert",2,"Comment s’appelle le poney de Sam ?","Bill"],
+["vert",2,"De quel peuple les Pieds-velus sont-ils les ancêtres ?","Les hobbits"],
+["vert",2,"Quelle créature garde l’entrée de la Moria depuis le lac ?","Le Guetteur de l’eau"],
+["vert",2,"Quels hommes sauvages Saroumane rallie-t-il contre le Rohan ?","Les hommes du Pays de Dun"],
+["vert",3,"À quel peuple Aragorn appartient-il ?","Les Dúnedain"],
+["vert",3,"Comment s’appelle le cheval de Théoden ?","Nivacrin"],
+["vert",3,"Quel cheval Aragorn monte-t-il au Rohan ?","Brego"],
+["vert",3,"Qui est le « père » des orques dans Les Anneaux de Pouvoir ?","Adar"],
+["vert",3,"De quel peuple Sméagol faisait-il partie avant l’Anneau ?","Un peuple proche des hobbits, les Forts"],
+["vert",3,"Quels oiseaux espions survolent la Communauté ?","Des crebain"],
+["vert",4,"Comment s’appelle le seigneur des Aigles qui délivre Gandalf ?","Gwaihir"],
+["vert",4,"Comment s’appelle l’ancêtre de toutes les araignées géantes ?","Ungoliant"],
+["vert",4,"Comment s’appelle le cheval d’Arwen ?","Asfaloth"],
+["vert",4,"Comment appelle-t-on les épouses disparues des Ents ?","Les Ents-femmes"],
+["orange",1,"Combien d’anneaux de pouvoir ont été donnés aux hommes ?","Neuf"],
+["orange",1,"Combien d’anneaux ont été forgés pour les nains ?","Sept"],
+["orange",1,"Combien d’anneaux ont été forgés pour les elfes ?","Trois"],
+["orange",1,"Comment s’appelle l’épée de Frodon ?","Dard"],
+["orange",1,"Quelle arme Gimli manie-t-il ?","Une hache"],
+["orange",1,"Quelle arme Legolas manie-t-il ?","Un arc"],
+["orange",2,"Quelle épée est reforgée pour Aragorn ?","Andúril"],
+["orange",2,"Comment s’appelait l’épée brisée d’Elendil ?","Narsil"],
+["orange",2,"Comment s’appelle l’épée de Gandalf ?","Glamdring"],
+["orange",2,"Quelle épée elfique Thorin trouve-t-il dans la caverne des trolls ?","Orcrist"],
+["orange",2,"En quel métal est la cotte de mailles de Frodon ?","En mithril"],
+["orange",2,"Que contient la fiole offerte par Galadriel à Frodon ?","La lumière d’Eärendil"],
+["orange",2,"Comment s’appellent les pierres de vision comme celle d’Orthanc ?","Les palantíri"],
+["orange",2,"Quel joyau Thorin convoite-t-il plus que tout ?","L’Arkenstone"],
+["orange",2,"Quel pain elfique nourrit la Communauté en voyage ?","Le lembas"],
+["orange",2,"Que souffle Boromir pour appeler à l’aide ?","Le cor du Gondor"],
+["orange",2,"Que reçoivent les membres de la Communauté en Lórien pour se cacher ?","Des capes elfiques"],
+["orange",2,"Quelle flèche tue Smaug ?","Une flèche noire"],
+["orange",2,"Quel métal rare doit sauver les elfes dans Les Anneaux de Pouvoir ?","Le mithril"],
+["orange",2,"Qu’est-ce qui sauve Frodon du coup du troll des cavernes ?","Sa cotte de mailles en mithril"],
+["orange",3,"Qui a forgé les anneaux des elfes ?","Celebrimbor"],
+["orange",3,"Quel bélier enfonce la porte de Minas Tirith ?","Grond"],
+["orange",3,"Que fait Gandalf pour révéler l’inscription de l’Anneau ?","Il le jette dans le feu"],
+["orange",3,"Quel objet Galadriel donne-t-elle à Sam dans le film ?","Une corde elfique"],
+["orange",3,"Quel pendentif Arwen offre-t-elle à Aragorn ?","L’Étoile du Soir"],
+["orange",3,"Quelle arme Sauron manie-t-il dans le prologue ?","Une masse d’armes"],
+["orange",3,"Quelle carte guide la compagnie de Thorin vers Erebor ?","La carte de Thrór"],
+["orange",3,"Qui a confié à Gandalf la clé de la porte secrète d’Erebor ?","Thráin, le père de Thorin"],
+["orange",4,"Comment s’appelle l’anneau de Galadriel ?","Nenya"],
+["orange",4,"Comment s’appelle l’anneau de Gandalf ?","Narya"],
+["orange",4,"Comment s’appelle l’anneau d’Elrond ?","Vilya"],
+["orange",4,"Combien de palantíri ont été apportés en Terre du Milieu ?","Sept"],
+["bleu",3,"Qui est le chef des Nazgûl ?","Le Roi-Sorcier d’Angmar"],
+["bleu",4,"Comment s’appelle le premier Seigneur des Ténèbres, maître de Sauron ?","Morgoth"]
+];
+
+/* ===== La Roue des savoirs : questions ouvertes, Monde des sorciers ===== */
+const ROUE_HP=[
+["rose",1,"Comment s’appelle l’école de sorcellerie de Harry ?","Poudlard"],
+["rose",1,"Quel village sorcier se trouve près de Poudlard ?","Pré-au-Lard"],
+["rose",1,"Quelle rue commerçante est cachée derrière le Chaudron Baveur ?","Le Chemin de Traverse"],
+["rose",1,"Quelle banque est tenue par les gobelins ?","Gringotts"],
+["rose",1,"Quelle voie de King’s Cross mène au Poudlard Express ?","La voie 9 ¾"],
+["rose",1,"Quelle prison est gardée par les Détraqueurs ?","Azkaban"],
+["rose",1,"Comment s’appelle la maison des Weasley ?","Le Terrier"],
+["rose",1,"Quelle forêt borde Poudlard ?","La Forêt interdite"],
+["rose",1,"Dans quelle ville se déroule le premier film des Animaux fantastiques ?","New York"],
+["rose",2,"À quelle adresse vivent les Dursley ?","4, Privet Drive"],
+["rose",2,"Quelle maison de Londres sert de quartier général à l’Ordre du Phénix ?","Le 12, square Grimmaurd"],
+["rose",2,"Dans quel village vivaient les parents de Harry ?","Godric’s Hollow"],
+["rose",2,"Quelle ruelle sombre jouxte le Chemin de Traverse ?","L’allée des Embrumes"],
+["rose",2,"Quel pub sert de passage vers le Chemin de Traverse ?","Le Chaudron Baveur"],
+["rose",2,"Quelle cabane de Pré-au-Lard est réputée hantée ?","La Cabane hurlante"],
+["rose",2,"Quelle salle apparaît à qui en a vraiment besoin ?","La Salle sur Demande"],
+["rose",2,"Quelle confiserie se trouve à Pré-au-Lard ?","Honeydukes"],
+["rose",2,"Quel pub de Pré-au-Lard tient Madame Rosmerta ?","Les Trois Balais"],
+["rose",2,"Quelle école de magie française participe au Tournoi des Trois Sorciers ?","Beauxbâtons"],
+["rose",2,"Quelle école venue du Nord participe au Tournoi des Trois Sorciers ?","Durmstrang"],
+["rose",2,"Quel hôpital soigne les sorciers à Londres ?","Sainte-Mangouste"],
+["rose",2,"Quelle boutique vend les baguettes sur le Chemin de Traverse ?","Ollivander"],
+["rose",2,"Où se déroule la deuxième tâche du Tournoi des Trois Sorciers ?","Dans le lac de Poudlard"],
+["rose",2,"Où se déroule la troisième tâche du Tournoi des Trois Sorciers ?","Dans un labyrinthe"],
+["rose",2,"Comment entre-t-on au ministère de la Magie en tant que visiteur ?","Par une cabine téléphonique"],
+["rose",2,"Comment s’appelle la boutique de farces de Pré-au-Lard ?","Zonko"],
+["rose",2,"Dans quelle ville se tient le rassemblement de Grindelwald ?","Paris"],
+["rose",2,"Comment s’appelle le congrès des sorciers américains ?","Le MACUSA"],
+["rose",3,"Quel pub de Pré-au-Lard tient Abelforth Dumbledore ?","La Tête de Sanglier"],
+["rose",3,"Comment s’appelle la maison de Bill et Fleur ?","La Chaumière aux Coquillages"],
+["rose",3,"Quelle école de sorcellerie se trouve en Amérique du Nord ?","Ilvermorny"],
+["rose",3,"Dans quel département du ministère sont conservées les prophéties ?","Le département des Mystères"],
+["rose",3,"Où se trouve la salle commune de Serpentard ?","Dans les cachots, sous le lac"],
+["rose",3,"Dans quel cimetière Voldemort renaît-il ?","Celui de Little Hangleton"],
+["rose",3,"Où Harry et Dumbledore cherchent-ils le médaillon de Serpentard ?","Dans une grotte au bord de la mer"],
+["rose",3,"Dans quel coffre de Gringotts était cachée la pierre philosophale ?","Le coffre 713"],
+["rose",3,"Dans quelle tour Dumbledore meurt-il ?","La tour d’Astronomie"],
+["rose",3,"Quelle librairie du Chemin de Traverse accueille Gilderoy Lockhart ?","Fleury et Bott"],
+["rose",3,"Dans quelle capitale allemande se déroule une partie des Secrets de Dumbledore ?","Berlin"],
+["rose",4,"Près de quel village se trouve le Terrier ?","Loutry Ste Chaspoule"],
+["rose",4,"Dans quel pays se tient la cérémonie du Qilin ?","Le Bhoutan"],
+["rose",4,"Où se trouve l’entrée de la Chambre des secrets ?","Dans les toilettes de Mimi Geignarde"],
+["vert",1,"Quelle formule fait léviter un objet ?","Wingardium Leviosa"],
+["vert",1,"Quel sortilège désarme l’adversaire ?","Expelliarmus"],
+["vert",1,"Quelle formule allume la pointe de la baguette ?","Lumos"],
+["vert",1,"Quel est le sortilège de la mort ?","Avada Kedavra"],
+["vert",1,"Quelle formule ouvre les serrures ?","Alohomora"],
+["vert",1,"Quelle matière enseigne Rogue pendant des années ?","Les potions"],
+["vert",1,"Quelle matière enseigne McGonagall ?","La métamorphose"],
+["vert",2,"Quel sortilège fait apparaître un Patronus ?","Spero Patronum"],
+["vert",2,"Quel sortilège sert à torturer ?","Endoloris"],
+["vert",2,"Quel sortilège soumet la volonté d’autrui ?","Impero"],
+["vert",2,"Quelle potion permet de prendre l’apparence d’un autre ?","Le Polynectar"],
+["vert",2,"Quelle potion porte chance ?","Le Felix Felicis"],
+["vert",2,"Quel sérum oblige à dire la vérité ?","Le Veritaserum"],
+["vert",2,"Quel sortilège efface la mémoire ?","Oubliettes"],
+["vert",2,"Quel sortilège répare un objet cassé ?","Reparo"],
+["vert",2,"Quel sortilège ridiculise un épouvantard ?","Riddikulus"],
+["vert",2,"Quel sortilège attire un objet vers soi ?","Accio"],
+["vert",2,"Quel sortilège pétrifie complètement l’adversaire ?","Petrificus Totalus"],
+["vert",2,"Quel sortilège stupéfie l’adversaire ?","Stupéfix"],
+["vert",2,"Comment appelle-t-on un sorcier capable de se changer en animal ?","Un Animagus"],
+["vert",2,"Comment appelle-t-on l’art de disparaître et réapparaître ailleurs ?","Le transplanage"],
+["vert",2,"Quelle matière enseigne Trelawney ?","La divination"],
+["vert",2,"Quelle matière enseigne le professeur Chourave ?","La botanique"],
+["vert",2,"Quelle matière enseigne le professeur Flitwick ?","Les sortilèges"],
+["vert",2,"Comment appelle-t-on les trois sortilèges interdits ?","Les sortilèges impardonnables"],
+["vert",2,"Quel sortilège crée un bouclier ?","Protego"],
+["vert",3,"Quel sortilège a inventé le Prince de sang-mêlé pour blesser ?","Sectumsempra"],
+["vert",3,"Quel sortilège suspend quelqu’un par la cheville ?","Levicorpus"],
+["vert",3,"Comment appelle-t-on l’art de fermer son esprit ?","L’occlumancie"],
+["vert",3,"Comment appelle-t-on l’art de lire dans l’esprit d’autrui ?","La legilimancie"],
+["vert",3,"Quel sortilège éteint la lumière d’une baguette ?","Nox"],
+["vert",3,"Quel sortilège fait jaillir de l’eau ?","Aguamenti"],
+["vert",3,"Quel sortilège fait apparaître la Marque des Ténèbres ?","Morsmordre"],
+["vert",3,"Quelle potion aide les loups-garous à garder leur esprit ?","La potion Tue-loup"],
+["vert",3,"Quel élixir la pierre philosophale permet-elle de produire ?","L’élixir de longue vie"],
+["vert",3,"Comment s’appelle le feu maudit qui ravage la Salle sur Demande ?","Le Feudeymon"],
+["vert",3,"Quel sortilège immobilise les lutins de Cornouailles dans le deuxième film ?","Immobilus"],
+["vert",4,"Quel sortilège révèle le dernier sort lancé par une baguette ?","Prior Incantato"],
+["vert",4,"Quel sortilège crée une bulle d’air autour de la tête ?","Le sortilège de Têtenbulle"],
+["vert",4,"Quelle potion plonge dans un sommeil si profond qu’on semble mort ?","Le philtre de Mort vivante"],
+["vert",4,"Quel sortilège fait grossir un objet ou une créature ?","Amplificatum"],
+["orange",1,"Quel objet répartit les élèves dans les maisons ?","Le Choixpeau magique"],
+["orange",1,"Quelle balle l’attrapeur doit-il saisir ?","Le Vif d’or"],
+["orange",1,"Quel est le premier balai de Harry ?","Un Nimbus 2000"],
+["orange",1,"Comment s’appelle le rat de Ron ?","Croûtard"],
+["orange",1,"Comment s’appelle le phénix de Dumbledore ?","Fumseck"],
+["orange",1,"Comment s’appelle le chien à trois têtes ?","Touffu"],
+["orange",1,"Quelle créature attire tout ce qui brille ?","Le Niffleur"],
+["orange",2,"Quel balai Sirius offre-t-il à Harry ?","Un Éclair de feu"],
+["orange",2,"Comment s’appelle le chat d’Hermione ?","Pattenrond"],
+["orange",2,"Comment s’appelle l’acromantule de Hagrid ?","Aragog"],
+["orange",2,"Comment s’appelle le bébé dragon de Hagrid dans le premier tome ?","Norbert"],
+["orange",2,"Comment s’appelle l’hippogriffe sauvé par Harry et Hermione ?","Buck"],
+["orange",2,"Quel objet permet de voyager en le touchant ?","Un Portoloin"],
+["orange",2,"Quel objet Dumbledore utilise-t-il pour éteindre les lampadaires ?","Le Déluminateur"],
+["orange",2,"Quel animal est Pickett, l’ami de Norbert Dragonneau ?","Un Botruc"],
+["orange",3,"Combien de Horcruxes Voldemort a-t-il créés volontairement ?","Six"],
+["orange",3,"Quelle boule de verre devient rouge quand on a oublié quelque chose ?","Le Rapeltout"],
+["orange",3,"Quel objet indique où se trouve chaque membre de la famille Weasley ?","L’horloge du Terrier"],
+["orange",3,"Dans quel objet Dumbledore conserve-t-il ses souvenirs ?","La Pensine"]
+];
+
+/* ===== La Roue des savoirs : questions ouvertes, Galaxie lointaine ===== */
+const ROUE_SW=[
+["rose",1,"Sur quelle planète désertique Luke grandit-il ?","Tatooine"],
+["rose",1,"Sur quelle planète glacée se cache la base rebelle de L’Empire contre-attaque ?","Hoth"],
+["rose",1,"Sur quelle planète marécageuse Yoda vit-il en exil ?","Dagobah"],
+["rose",1,"Sur quelle lune forestière vivent les Ewoks ?","Endor"],
+["rose",1,"Quelle planète l’Étoile de la Mort détruit-elle dans Un nouvel espoir ?","Alderaan"],
+["rose",1,"Quelle planète-ville abrite le Sénat galactique ?","Coruscant"],
+["rose",1,"Sur quelle planète de lave Anakin et Obi-Wan s’affrontent-ils ?","Mustafar"],
+["rose",1,"Sur quelle planète vit Padmé Amidala ?","Naboo"],
+["rose",1,"Sur quelle planète désertique Rey vit-elle au début du Réveil de la Force ?","Jakku"],
+["rose",1,"Sur quelle planète se trouve le palais de Jabba ?","Tatooine"],
+["rose",2,"Sur quelle planète océanique sont fabriqués les clones ?","Kamino"],
+["rose",2,"Quelle est la planète natale des Wookiees ?","Kashyyyk"],
+["rose",2,"Au-dessus de quelle planète flotte la Cité des Nuages ?","Bespin"],
+["rose",2,"Sur quelle planète-île Luke vit-il en ermite ?","Ahch-To"],
+["rose",2,"Sur quelle planète couverte de sel se déroule la bataille finale des Derniers Jedi ?","Crait"],
+["rose",2,"Sur quelle planète cachée Palpatine attend-il son retour ?","Exegol"],
+["rose",2,"Sur quelle planète tropicale l’équipe de Rogue One vole-t-elle les plans ?","Scarif"],
+["rose",2,"Sur quelle planète Han Solo est-il né ?","Corellia"],
+["rose",2,"Dans quel port spatial se trouve la cantina où Luke rencontre Han ?","Mos Eisley"],
+["rose",2,"Sur quelle planète éclate la première bataille de la Guerre des clones ?","Géonosis"],
+["rose",2,"Sur quelle planète Obi-Wan affronte-t-il le général Grievous ?","Utapau"],
+["rose",2,"Sur quelle lune se trouve la base rebelle d’Un nouvel espoir ?","Yavin 4"],
+["rose",2,"Comment s’appelle la cité capitale de Naboo ?","Theed"],
+["rose",2,"Quelle ville sainte est frappée par l’Étoile de la Mort dans Rogue One ?","Jedha"],
+["rose",2,"Sur quelle planète se trouve le château de Maz Kanata ?","Takodana"],
+["rose",2,"De quelle planète minière Han fait-il le célèbre raid ?","Kessel"],
+["rose",3,"Comment s’appelle la cité sous-marine des Gungans ?","Otoh Gunga"],
+["rose",3,"Quelle ville-casino Finn et Rose visitent-ils ?","Canto Bight"],
+["rose",3,"Dans quelle ville de Tatooine Anakin a-t-il grandi ?","Mos Espa"],
+["rose",3,"Sur quel astéroïde Padmé accouche-t-elle ?","Polis Massa"],
+["rose",3,"Sur quelle planète a lieu le festival des Ancêtres ?","Pasaana"],
+["rose",3,"Sur quelle planète pluvieuse Galen Erso meurt-il ?","Eadu"],
+["rose",3,"Sur quelle planète forestière se cache la Résistance dans L’Ascension de Skywalker ?","Ajan Kloss"],
+["rose",3,"Sur quelle planète boueuse Han combat-il comme soldat impérial ?","Mimban"],
+["rose",3,"Où se trouve la base de la Résistance dans Le Réveil de la Force ?","D’Qar"],
+["rose",4,"Comment s’appelle la fosse du désert où vit le sarlacc ?","Le Grand Puits de Carkoon"],
+["rose",4,"Sur quelle planète Jyn est-elle détenue au début de Rogue One ?","Wobani"],
+["rose",4,"Sur quelle planète Galen Erso se cache-t-il avec sa famille ?","Lah’mu"],
+["rose",4,"Sur quelle lune océanique gisent les ruines de la seconde Étoile de la Mort ?","Kef Bir"],
+["vert",1,"De quelle couleur est le sabre laser des Sith ?","Rouge"],
+["vert",1,"Comment appelle-t-on un apprenti Jedi ?","Un padawan"],
+["vert",1,"Quel est le nom de Sith de Palpatine ?","Dark Sidious"],
+["vert",1,"Quel ordre déclenche l’extermination des Jedi ?","L’ordre 66"],
+["vert",1,"Qui est le Grand Maître de l’Ordre Jedi dans la prélogie ?","Yoda"],
+["vert",1,"Quel Sith manie un sabre à double lame ?","Dark Maul"],
+["vert",2,"Quelles particules mesurent le lien d’un être avec la Force ?","Les midi-chloriens"],
+["vert",2,"Combien de Sith existent toujours, selon leur règle ?","Deux, un maître et un apprenti"],
+["vert",2,"Qui est le maître d’Anakin ?","Obi-Wan Kenobi"],
+["vert",2,"Qui est le maître d’Obi-Wan ?","Qui-Gon Jinn"],
+["vert",2,"Quel est le nom de Sith du Comte Dooku ?","Dark Tyranus"],
+["vert",2,"De quelle couleur est le sabre de Mace Windu ?","Violet"],
+["vert",2,"Quelle prophétie Qui-Gon voit-il en Anakin ?","Celle de l’Élu, qui ramènera l’équilibre dans la Force"],
+["vert",2,"Quel pouvoir de la Force Palpatine utilise-t-il contre Luke ?","Les éclairs de Force"],
+["vert",2,"Quel tour Jedi impose une idée aux esprits faibles ?","La suggestion mentale"],
+["vert",2,"De quelle couleur est le sabre de Luke dans Le Retour du Jedi ?","Vert"],
+["vert",2,"De quelle couleur est le sabre que se construit Rey ?","Jaune"],
+["vert",2,"Comment s’appelle l’assemblée qui dirige l’Ordre Jedi ?","Le Conseil Jedi"],
+["vert",2,"Où les Jedi vivent-ils et s’entraînent-ils sur Coruscant ?","Au Temple Jedi"],
+["vert",3,"Quel cristal alimente un sabre laser ?","Un cristal kyber"],
+["vert",3,"Qui était le maître de Palpatine ?","Dark Plagueis"],
+["vert",3,"Qui commande les Chevaliers de Ren ?","Kylo Ren"],
+["vert",3,"Sous quelle forme Obi-Wan continue-t-il de guider Luke après sa mort ?","En esprit de la Force"],
+["vert",3,"Comment Palpatine appelle-t-il le lien entre Rey et Ben ?","Une dyade dans la Force"],
+["vert",3,"Que garde Luke dans l’arbre sacré d’Ahch-To ?","Les anciens textes Jedi"],
+["vert",3,"Comment s’appellent les gardes rouges qui protègent Snoke ?","La Garde prétorienne"],
+["vert",3,"Qui forme Rey après la mort de Luke ?","Leia"],
+["vert",4,"Comment s’appelle la règle qui limite les Sith à deux ?","La règle des Deux"],
+["vert",4,"Quelle Jedi, gardienne des archives, défend le Temple pendant l’ordre 66 ?","Jocasta Nu"],
+["orange",1,"Quel type de chasseur Luke pilote-t-il contre l’Étoile de la Mort ?","Un X-wing"],
+["orange",1,"Quel chasseur l’Empire utilise-t-il en masse ?","Le chasseur TIE"],
+["orange",1,"Quel droïde de protocole parle plus de six millions de langages ?","C-3PO"],
+["orange",1,"Comment s’appelle le droïde orange et blanc de Poe ?","BB-8"],
+["orange",1,"Dans quoi Han Solo est-il congelé ?","La carbonite"],
+["orange",2,"Quels marcheurs géants attaquent la base de Hoth ?","Les AT-AT"],
+["orange",2,"Quelle arme porte Chewbacca ?","Une arbalète laser"],
+["orange",2,"Comment s’appelle le vaisseau de Boba Fett ?","Le Slave I"],
+["orange",2,"Comment s’appelle le vaisseau de Leia au début d’Un nouvel espoir ?","Le Tantive IV"],
+["orange",2,"Comment s’appelle le vaisseau amiral de Dark Vador dans L’Empire contre-attaque ?","L’Executor"],
+["orange",2,"Comment s’appelle la base-planète du Premier Ordre qui détruit le système Hosnian ?","Starkiller"],
+["orange",2,"Quel droïde impérial reprogrammé accompagne Cassian Andor ?","K-2SO"],
+["orange",2,"Comment s’appellent les droïdes de combat qui roulent en boule et ont un bouclier ?","Les droïdekas"],
+["orange",3,"Quel marcheur à deux pattes Chewbacca vole-t-il à Endor ?","Un AT-ST"],
+["orange",3,"Quel carburant rare Han transporte-t-il dans Solo ?","Du coaxium"],
+["orange",3,"Quel droïde féminin devient une partie du Faucon Millenium ?","L3-37"],
+["orange",3,"Comment s’appelle le vaisseau amiral de Snoke ?","Le Supremacy"],
+["orange",4,"Quel modèle de blaster Han Solo utilise-t-il ?","Un DL-44"],
+["orange",4,"Comment s’appelle la navette volée par le commando d’Endor ?","La Tydirium"]
+];
+
+/* ===== La Roue des savoirs : plateau en roue, en ligne de 2 à 6 joueurs ===== */
+const RCOL=["bleu","rose","jaune","marron","vert","orange"];
+const RHEX={bleu:"#2f6fd1",rose:"#e0559a",jaune:"#f2c230",marron:"#8a5a2b",vert:"#2f9e55",orange:"#ec7a1c"};
+const RNAMES={
+me:{bleu:"Personnages",rose:"Lieux et royaumes",jaune:"Répliques",marron:"Coulisses et tournage",vert:"Peuples et créatures",orange:"Objets, armes et anneaux"},
+hp:{bleu:"Personnages",rose:"Lieux",jaune:"Répliques",marron:"Coulisses et tournage",vert:"Sortilèges, potions et magie",orange:"Créatures et objets magiques"},
+sw:{bleu:"Personnages",rose:"Planètes et lieux",jaune:"Répliques",marron:"Coulisses et tournage",vert:"La Force, Jedi et Sith",orange:"Vaisseaux, droïdes et technologie"}};
+const rName=c=>(RNAMES[W.id]||RNAMES.me)[c];
+const RPCOL=["#ffffff","#1b1b1b","#8e44ad","#c0392b","#16a085","#7f8c8d"];
+const RMAX=6;
+
+/* ---------- Les questions, rangées par thème ---------- */
+const RRX={
+me:{rose:/\b(où|lieu|cité|ville|royaume|forteresse|tour|montagne|forêt|région|rivière|fleuve|mer|île|col|village|auberge|pays|capitale|mine|caverne|grotte)\b/i,
+ vert:/\b(créature|peuple|elfe|elfes|nain|nains|orque|orques|uruk|ents?|hobbit|hobbits|dragon|araignée|troll|trolls|warg|wargs|aigle|aigles|balrog|oliphants?|crebain|pieds-velus|espèce|cheval|poney)\b/i,
+ orange:/\b(épée|épées|anneau|anneaux|arme|armes|arc|hache|objet|cotte|fiole|palantír|arkenstone|bâton|cadeau|mithril|lame|dague|bouclier|casque|cor|couronne|clé|carte)\b/i},
+hp:{rose:/\b(où|lieu|ville|village|château|maison|salle|bureau|forêt|lac|gare|voie|rue|boutique|magasin|banque|prison|azkaban|ministère|quartier|école|pays|cimetière|grotte|toilettes|tour)\b/i,
+ vert:/\b(sort|sorts|sortilège|sortilèges|potion|potions|formule|incantation|patronus|transplan\w*|polynectar|maléfice|magie|charme|métamorphose|enchant\w*|occlumancie|impardonnable\w*|animagus|matière)\b/i,
+ orange:/\b(créature|créatures|animal|hibou|chouette|dragon|elfe|hippogriffe|niffleur|botruc|occamy|phénix|basilic|acromantule|serpent|balai|balais|baguette|horcruxes?|cape|miroir|retourneur|vif|choixpeau|objet|reliques?|pensine|journal|médaillon|diadème|coupe|pierre)\b/i},
+sw:{rose:/\b(où|planète|planètes|lune|lieu|ville|cité|base|système|désert|cantina|palais|temple|monde|canyon|forêt|château|marais)\b/i,
+ vert:/\b(force|jedi|sith|sabre|sabres|padawan|maître|midi-chlorien\w*|apprenti|conseil|côté obscur|holocron|élu)\b/i,
+ orange:/\b(vaisseau|vaisseaux|droïde|droïdes|chasseur|x-wing|y-wing|tie|destroyer|étoile de la mort|faucon|at-at|at-st|blaster|hyperespace|hyperpropul\w*|speeder|motojet|navette|croiseur|module|starkiller|executor|slave|bouclier|arme|armes|cargo)\b/i}};
+const RBAD=/\b(lequel|laquelle|lesquel|parmi|quelle affirmation|ces |cette liste|suivant)/i;
+const RDECK={};
+function roueDeck(){
+if(RDECK[W.id])return RDECK[W.id];
+const dk={};RCOL.forEach(c=>dk[c]=[]);const rx=RRX[W.id]||RRX.me,U=W.U;
+const put=(c,l,q,a,x)=>dk[c].push({l:Math.max(1,Math.min(4,l)),q,a,x:x||""});
+W.QCM.forEach(d=>{if(RBAD.test(d[1]))return;const q=d[1],a=d[2][0];
+ if(isMeta(d))return put("marron",d[0],q,a,d[3]);
+ if(rx.orange.test(q))return put("orange",d[0],q,a,d[3]);
+ if(rx.vert.test(q))return put("vert",d[0],q,a,d[3]);
+ if(rx.rose.test(q))return put("rose",d[0],q,a,d[3]);
+ if(/^(qui|de qui|à qui|comment s’appelle|quel personnage)/i.test(q)||U[d.u].names.includes(a))return put("bleu",d[0],q,a,d[3])});
+W.QUOTES.forEach(d=>{const film=U[d.u].films[d[3]];
+ put("jaune",d[0],`Qui a dit : « ${d[1]} » ?`,d[2],`Dans ${film}. ${d[4]||""}`);
+ if(d.k)put("jaune",d[0]+1,`Complétez cette réplique de ${d[2]} : « ${d[1].replace(reK(d.k),(m,a)=>a+"…")} »`,d.k,`« ${d[1]} » (${film})`)});
+W.WHO.forEach(d=>put("bleu",d[0],`Qui suis-je ? ${d[3].slice(1,4).map(x=>"« "+x+" »").join(" ")}`,d[1]));
+({me:typeof ROUE_ME!=="undefined"?ROUE_ME:[],hp:typeof ROUE_HP!=="undefined"?ROUE_HP:[],sw:typeof ROUE_SW!=="undefined"?ROUE_SW:[]}[W.id]||[]).forEach(([c,l,q,a])=>put(c,l,q,a));
+return RDECK[W.id]=dk;
+}
+
+/* ---------- Le plateau ---------- */
+/* anneau de 42 cases (6 quartiers généraux, 12 cases « rejouer »), 6 rayons de 5 cases, un moyeu au centre */
+function rNode(id){
+if(id==="H")return {t:"hub"};
+if(id[0]==="r"){const i=+id.slice(1),k=Math.floor(i/7),j=i%7;
+ if(j===0)return {t:"hq",c:RCOL[k]};if(j===2||j===5)return {t:"roll"};return {t:"sq",c:RCOL[(k+(j<2?j:j<5?j-1:j-2)+1)%6]}}
+const [k,m]=id.slice(1).split("_").map(Number);return {t:"sq",c:RCOL[(k+m+2)%6]};
+}
+function rAdj(id){
+if(id==="H")return [0,1,2,3,4,5].map(k=>"s"+k+"_5");
+if(id[0]==="r"){const i=+id.slice(1),a=["r"+((i+1)%42),"r"+((i+41)%42)];if(i%7===0)a.push("s"+i/7+"_1");return a}
+const [k,m]=id.slice(1).split("_").map(Number);return [m===1?"r"+k*7:"s"+k+"_"+(m-1),m===5?"H":"s"+k+"_"+(m+1)];
+}
+function rDests(from,n){
+const out=new Set();const go=(cur,prev,left)=>{if(!left){out.add(cur);return}rAdj(cur).forEach(nx=>{if(nx!==prev)go(nx,cur,left-1)})};
+go(from,null,n);out.delete(from);return [...out];
+}
+function rXY(id){
+const C=180;if(id==="H")return [C,C];
+if(id[0]==="r"){const i=+id.slice(1),a=(-90+i*360/42)*Math.PI/180;return [C+150*Math.cos(a),C+150*Math.sin(a)]}
+const [k,m]=id.slice(1).split("_").map(Number),a=(-90+k*60)*Math.PI/180,r=150-m*(150-30)/6;return [C+r*Math.cos(a),C+r*Math.sin(a)];
+}
+const R_ALL=[...Array.from({length:42},(_,i)=>"r"+i),...[0,1,2,3,4,5].flatMap(k=>[1,2,3,4,5].map(m=>"s"+k+"_"+m)),"H"];
+function wedgeSvg(ws,r,cx=0,cy=0,stroke="#fff"){
+return `<g transform="translate(${cx} ${cy})"><circle r="${r}" fill="rgba(0,0,0,.25)" stroke="${stroke}" stroke-width="1.2"/>${RCOL.map((c,i)=>{if(!ws.includes(c))return "";const a0=(-90+i*60)*Math.PI/180,a1=(-90+(i+1)*60)*Math.PI/180;
+return `<path d="M0 0L${(r*Math.cos(a0)).toFixed(2)} ${(r*Math.sin(a0)).toFixed(2)}A${r} ${r} 0 0 1 ${(r*Math.cos(a1)).toFixed(2)} ${(r*Math.sin(a1)).toFixed(2)}Z" fill="${RHEX[c]}"/>`}).join("")}</g>`;
+}
+function boardSvg(S,mine){
+const opts=S.ph==="move"&&mine?S.opts:[];
+const cells=R_ALL.map(id=>{const [x,y]=rXY(id),n=rNode(id),hl=opts.includes(id);
+ if(n.t==="hub")return `<g ${hl?`data-rn="H" class="rhl"`:""}><circle cx="${x}" cy="${y}" r="27" fill="#2a1d12" stroke="#e2b04a" stroke-width="2"/>${RCOL.map((c,i)=>{const a0=(-90+i*60+4)*Math.PI/180,a1=(-90+(i+1)*60-4)*Math.PI/180,r=22;return `<path d="M${x} ${y}L${(x+r*Math.cos(a0)).toFixed(1)} ${(y+r*Math.sin(a0)).toFixed(1)}A${r} ${r} 0 0 1 ${(x+r*Math.cos(a1)).toFixed(1)} ${(y+r*Math.sin(a1)).toFixed(1)}Z" fill="${RHEX[c]}" opacity=".9"/>`}).join("")}${hl?`<circle cx="${x}" cy="${y}" r="30" class="rring"/>`:""}</g>`;
+ const r=n.t==="hq"?14:9.5,fill=n.t==="roll"?"#3a2a1c":RHEX[n.c];
+ return `<g ${hl?`data-rn="${id}" class="rhl"`:""}><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${n.t==="hq"?"#fff6d8":"rgba(0,0,0,.45)"}" stroke-width="${n.t==="hq"?2.4:1}"/>${n.t==="roll"?`<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="#ffe39a">⟳</text>`:""}${n.t==="hq"?`<path d="M${x.toFixed(1)} ${(y-6).toFixed(1)}l2 4 4.5.6-3.3 3 .8 4.5-4-2.2-4 2.2.8-4.5-3.3-3 4.5-.6z" fill="#fff6d8"/>`:""}${hl?`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r+4}" class="rring"/>`:""}</g>`}).join("");
+const byPos={};S.order.forEach((p,i)=>{const pos=S.players[p].pos;(byPos[pos]=byPos[pos]||[]).push(i)});
+const toks=Object.entries(byPos).map(([pos,list])=>{const [x,y]=rXY(pos);return list.map((i,j)=>{const off=list.length>1?(j-(list.length-1)/2)*11:0,p=S.players[S.order[i]],act=i===S.t;
+ return `<g class="${act?"rtok act":"rtok"}" transform="translate(${(x+off).toFixed(1)} ${(y-(list.length>1?3:0)).toFixed(1)})">${wedgeSvg(p.w,8.5,0,0,RPCOL[i])}<circle r="10.5" fill="none" stroke="${RPCOL[i]}" stroke-width="2.4"/></g>`}).join("")}).join("");
+return `<svg class="rboard" viewBox="0 0 360 360" role="img" aria-label="Plateau de La Roue des savoirs"><circle cx="180" cy="180" r="166" fill="rgba(0,0,0,.28)" stroke="rgba(226,176,74,.5)"/>${cells}${toks}</svg>`;
+}
+
+/* ---------- État partagé : tenu par l’hôte ---------- */
+const RG={get pid(){return D.pid},ch:null,code:null,host:false,S:null,lobby:{order:[],names:{}},lvl:0,used:{}};
+const remit=(t,d)=>{if(RG.ch)RG.ch.emit(t,Object.assign({pid:RG.pid,name:D.name},d))};
+const rActive=S=>S.order[S.t],rReader=S=>S.order[(S.t+1)%S.order.length];
+function rTop(t){return `<div class="top"><div class="cin">La Roue des savoirs${t?" · "+t:""}</div><button class="btn ghost" data-act="home">Quitter</button></div>`}
+function roueLeave(){clearInterval(RG.beat);RG.beat=null;if(RG.ch)RG.ch.leave();RG.ch=null;RG.code=null;RG.S=null;RG.host=false;RG.lobby={order:[],names:{}}}
+function roueEnter(){
+stop();G={roue:true};
+app.innerHTML=rTop()+`<section class="card"><p class="stat">Ouverture de la salle de jeu…</p></section>`;
+getTransport().then(tr=>{if(!G||!G.roue)return;D.tr=tr;
+if(!tr){app.innerHTML=rTop()+`<section class="card"><h2>Le jeu en ligne n’est pas disponible ici</h2><p>Il faut ouvrir le site publié, où la connexion entre téléphones est configurée.</p><div class="row"><button class="btn ghost" data-act="home">Retour</button></div></section>`;return}
+roueForm()})}
+function roueForm(){
+app.innerHTML=rTop()+`<section class="card" style="text-align:center">${rLogo(84)}
+<h2 style="margin-top:12px">La Roue des savoirs</h2><p class="stat">De 2 à 6 joueurs, chacun sur son téléphone. Lancez le dé, avancez sur la roue, gagnez les six parts, puis visez le centre.</p>
+<div class="rlegend">${RCOL.map(c=>`<span><i style="background:${RHEX[c]}"></i>${rName(c)}</span>`).join("")}</div>
+<form id="roueF" autocomplete="off" style="text-align:start"><div class="ans"><input id="rName" type="text" maxlength="18" placeholder="Votre nom" aria-label="Votre nom" value="${esc(D.name)}"></div>
+<div class="row"><button class="btn" type="submit" data-act="rcreate" style="flex:1">Créer une partie</button></div>
+<div class="ans"><input id="rCode" type="text" maxlength="4" placeholder="Code à 4 lettres" aria-label="Code de la partie" autocapitalize="characters" style="text-transform:uppercase;letter-spacing:.2em" value="${RG.invite||""}"><button class="btn ${RG.invite?"":"ghost"}" type="submit" data-act="rjoin">Rejoindre</button></div></form>
+<p class="msg" id="rmsg">${RG.invite?`Vous êtes invité dans la partie ${RG.invite}. Choisissez un nom, puis « Rejoindre ».`:""}</p>
+<details class="rrules"><summary>Les règles</summary><p>Chacun part du centre. À votre tour, lancez le dé et choisissez une case en surbrillance. Le joueur suivant lit la question à voix haute : répondez de vive voix, il valide. Bonne réponse : vous rejouez. Sur un quartier général (grande case étoilée), une bonne réponse vous donne la part de cette couleur. Les cases ⟳ font rejouer. Avec les six parts, revenez au centre : vos adversaires choisissent le thème de la dernière question. Bonne réponse : victoire !</p></details></section>`;
+if(RG.invite){const inv=RG.invite;RG.invite=null;if(D.name)return roueJoin(inv,false);document.getElementById("rName").focus({preventScroll:true})}
+}
+function roueSubmit(sub){
+const nm=document.getElementById("rName").value.trim(),code=document.getElementById("rCode").value.trim().toUpperCase(),msg=document.getElementById("rmsg");
+if(!nm){msg.className="msg ko";msg.textContent="Choisissez d’abord un nom.";return}
+D.name=nm.slice(0,18);try{localStorage.setItem("sda-name",D.name)}catch(e){}
+let act=sub&&sub.dataset.act;if(code&&(!act||document.activeElement&&document.activeElement.id==="rCode"))act="rjoin";
+if(act==="rjoin"){if(!/^[A-Z]{4}$/.test(code)){msg.className="msg ko";msg.textContent="Le code fait quatre lettres.";return}roueJoin(code,false)}
+else{const L="ABCDEFGHJKLMNPRSTUVWXYZ";roueJoin(Array.from({length:4},()=>L[Math.floor(Math.random()*L.length)]).join(""),true)}
+}
+async function roueJoin(code,host){
+roueLeave();Object.assign(RG,{code,host,S:null,lobby:{order:host?[RG.pid]:[],names:{[RG.pid]:D.name}},used:{},joinedAt:Date.now(),lastHost:Date.now()});
+app.innerHTML=rTop("salle "+code)+`<section class="card"><p class="stat">Connexion à la salle ${code}…</p></section>`;
+try{RG.ch=await D.tr.join("roue-"+code)}catch(e){RG.ch=null}
+if(!RG.ch){roueForm();const m=document.getElementById("rmsg");m.className="msg ko";m.textContent="Impossible d’ouvrir la salle. Réessayez.";return}
+const on=(t,f)=>RG.ch.on(t,m=>{if(m&&m.pid&&m.pid!==RG.pid&&RG.code===code)f(m)});
+on("hello",m=>{if(!RG.host)return;const L=RG.lobby;L.names[m.pid]=String(m.name||"?").slice(0,18);
+ if(!L.order.includes(m.pid)&&!RG.S&&L.order.length<RMAX)L.order.push(m.pid);rRoster();if(!RG.S)rLobby();else remit("next",{S:RG.S})});
+on("roster",m=>{if(RG.host)return;RG.lastHost=Date.now();RG.hostPid=m.pid;RG.lobby={order:m.order||[],names:m.names||{}};RG.lvl=m.lvl||0;if(!RG.S)rLobby()});
+on("next",m=>{if(RG.host)return;RG.lastHost=Date.now();if(!m.S||(RG.S&&m.S.seq<=RG.S.seq))return;RG.S=m.S;rRender()});
+on("ans",m=>{if(RG.host)rApply(m.pid,m)});
+RG.beat=setInterval(()=>{if(RG.host){if(RG.S)remit("next",{S:RG.S});else rRoster()}else if(!RG.S||!RG.S.order.includes(RG.pid))remit("hello",{})},2500);
+if(host)rRoster();else remit("hello",{});
+rLobby();
+}
+const rRoster=()=>remit("roster",{order:RG.lobby.order,names:RG.lobby.names,lvl:RG.lvl});
+function rLogo(s){return `<svg width="${s}" height="${s}" viewBox="-30 -30 60 60" aria-hidden="true">${wedgeSvg(RCOL,26,0,0,"#e2b04a")}<circle r="7" fill="#2a1d12" stroke="#e2b04a" stroke-width="1.5"/></svg>`}
+function rLobby(){
+if(!G||!G.roue||RG.S)return;const L=RG.lobby,inR=L.order.includes(RG.pid);
+if(!RG.host&&!inR){app.innerHTML=rTop("salle "+RG.code)+`<section class="card"><p class="stat">Recherche de la partie ${RG.code}…</p>${Date.now()-RG.joinedAt>8000?`<p>Personne n’a encore ouvert cette salle. Vérifiez le code.</p><div class="row"><button class="btn ghost" data-act="rback">Changer de code</button></div>`:""}</section>`;
+ if(!RG.retry)RG.retry=setTimeout(()=>{RG.retry=null;rLobby()},8600);return}
+const url=rInviteUrl(),n=L.order.length;
+app.innerHTML=rTop("salle "+RG.code)+`<section class="card"><p class="kind" style="text-align:center">Code de la partie</p><div class="code">${RG.code}</div>
+${url?`<div class="row" style="justify-content:center"><button class="btn" data-act="rinvite">Envoyer le lien d’invitation</button></div><p class="msg ok" id="invMsg" style="text-align:center"></p>`:""}
+<ul class="board">${Array.from({length:RMAX},(_,i)=>{const p=L.order[i];return p?`<li class="${p===RG.pid?"me":""}"><span class="who"><span class="rdot" style="background:${RPCOL[i]}"></span><span class="nm">${esc(L.names[p]||"?")}</span>${p===RG.pid?" (vous)":""}</span></li>`:`<li><span class="who"><span class="rdot free"></span><span class="free">place libre</span></span></li>`}).join("")}</ul>
+<div class="rlegend">${RCOL.map(c=>`<span><i style="background:${RHEX[c]}"></i>${rName(c)}</span>`).join("")}</div>
+${RG.host?`<p class="kind" style="margin-top:14px">Niveau des questions</p><div class="seg">${[0,1,2,3,4].map(l=>`<button class="opt ${RG.lvl===l?"on":""}" data-rl="${l}">${LV[l]}</button>`).join("")}</div>
+<div class="row"><button class="btn" data-act="rstart" ${n<2?"disabled":""} style="flex:1">${n<2?"En attente d’un 2e joueur":`Lancer la partie · ${n} joueurs`}</button></div>`
+:`<p class="msg" style="text-align:center">L’hôte va lancer la partie…</p>`}</section>`;
+}
+function rInviteUrl(){try{if(!/^https?:$/.test(location.protocol)||/claude\.ai|claudeusercontent|anthropic/.test(location.hostname))return "";return location.origin+location.pathname+"?w="+W.id+"&r="+RG.code}catch(e){return ""}}
+async function rShareInvite(){
+const url=rInviteUrl(),txt=`Rejoins-moi pour une partie de La Roue des savoirs (${W.name}) ! Code : ${RG.code}`,m=document.getElementById("invMsg");
+try{if(navigator.share){await navigator.share({title:"La Roue des savoirs",text:txt,url});return}}catch(e){if(e&&e.name==="AbortError")return}
+try{await navigator.clipboard.writeText(txt+"\n"+url);if(m)m.textContent="Lien copié : collez-le dans vos messages."}catch(e){if(m)m.innerHTML=`<input readonly value="${esc(url)}" style="width:100%">`}
+}
+function rStart(){
+if(!RG.host||RG.lobby.order.length<2)return;const L=RG.lobby;
+RG.used={};RG.S={seq:1,lvl:RG.lvl,order:L.order.slice(),players:Object.fromEntries(L.order.map(p=>[p,{name:L.names[p]||"?",pos:"H",w:[]}])),t:0,ph:"roll",die:null,opts:[],q:null,last:null,msg:"La partie commence !"};
+rPush();
+}
+function rPush(){RG.S.seq++;remit("next",{S:RG.S});rRender()}
+/* l’hôte choisit une question du thème, au niveau voulu, sans répétition */
+function rCard(c){
+const deck=roueDeck()[c],lv=RG.S.lvl,ok={0:[1,2,3,4],1:[1,2],2:[2,3],3:[3,4],4:[4,3]}[lv]||[1,2,3,4];
+const used=RG.used[c]=RG.used[c]||new Set();
+let pool=deck.map((x,i)=>i).filter(i=>!used.has(i)&&ok.includes(deck[i].l));
+if(!pool.length)pool=deck.map((x,i)=>i).filter(i=>!used.has(i));
+if(!pool.length){used.clear();pool=deck.map((x,i)=>i)}
+const i=pool[Math.floor(Math.random()*pool.length)];used.add(i);return i;
+}
+function rAsk(c,hq,fin){const S=RG.S;S.q={c,i:rCard(c),hq:!!hq,fin:!!fin};S.ph="q"}
+function rApply(pid,m){
+const S=RG.S;if(!S||S.ph==="end")return;const act=rActive(S),rd=rReader(S),P=S.players[act];
+if(m.a==="roll"&&S.ph==="roll"&&pid===act){S.die=1+Math.floor(Math.random()*6);S.opts=rDests(P.pos,S.die);S.ph="move";S.msg=`${P.name} fait ${S.die}.`;return rPush()}
+if(m.a==="move"&&S.ph==="move"&&pid===act&&S.opts.includes(m.n)){P.pos=m.n;const n=rNode(m.n);S.opts=[];
+ if(n.t==="roll"){S.ph="roll";S.msg=`${P.name} tombe sur une case « rejouer » et relance le dé.`}
+ else if(n.t==="hub"){S.ph="pick";S.fin=P.w.length===6;S.msg=S.fin?`${P.name} a les six parts et entre au centre ! Ses adversaires choisissent le thème de la question finale.`:`${P.name} est au centre et choisit son thème.`}
+ else{rAsk(n.c,n.t==="hq");S.msg=n.t==="hq"?`${P.name} tente sa chance pour la part ${rName(n.c)} !`:""}
+ return rPush()}
+if(m.a==="pick"&&S.ph==="pick"&&RCOL.includes(m.c)&&pid===(S.fin?rd:act)){rAsk(m.c,false,S.fin);return rPush()}
+if(m.a==="judge"&&S.ph==="q"&&pid===rd){const q=S.q,card=roueDeck()[q.c][q.i];S.last={c:q.c,q:card.q,a:card.a,ok:!!m.ok,name:P.name};
+ if(m.ok){if(q.fin){S.ph="end";S.win=act;S.msg=`${P.name} remporte La Roue des savoirs !`;return rPush()}
+  if(q.hq&&!P.w.includes(q.c)){P.w.push(q.c);S.msg=`${P.name} gagne la part ${rName(q.c)} et rejoue !`}else S.msg=`Bonne réponse : ${P.name} rejoue.`;S.ph="roll"}
+ else{S.t=(S.t+1)%S.order.length;S.ph="roll";S.msg=`Raté ! Au tour de ${S.players[rActive(S)].name}.`}
+ S.q=null;S.die=null;return rPush()}
+if(m.a==="skip"&&pid===RG.pid&&RG.host){S.t=(S.t+1)%S.order.length;S.ph="roll";S.q=null;S.die=null;S.opts=[];S.msg=`Tour passé. Au tour de ${S.players[rActive(S)].name}.`;return rPush()}
+if(m.a==="again"&&pid===RG.pid&&RG.host){RG.S=null;rStart()}
+}
+function rAct(m){if(RG.host)rApply(RG.pid,m);else remit("ans",m)}
+const DIE=["","⚀","⚁","⚂","⚃","⚄","⚅"];
+function rRender(){
+if(!G||!G.roue)return;const S=RG.S;if(!S)return rLobby();
+const me=RG.pid,act=rActive(S),rd=rReader(S),A=S.players[act],mine=act===me,iRead=rd===me;
+const plist=S.order.map((p,i)=>{const P=S.players[p];return `<li class="${p===act?"me":""}"><span class="who"><svg width="30" height="30" viewBox="-15 -15 30 30">${wedgeSvg(P.w,12,0,0,RPCOL[i])}</svg><span><span class="nm">${esc(P.name)}</span>${p===me?" (vous)":""}<br><span class="stat">${P.w.length} part${P.w.length>1?"s":""}${p===act&&S.ph!=="end"?" · joue":""}${p===rd&&S.ph==="q"?" · lit la question":""}</span></span></span></li>`}).join("");
+let panel="";
+if(S.ph==="roll")panel=mine?`<button class="btn rbig" data-act="rroll">Lancer le dé</button>`:`<p class="stat">${esc(A.name)} lance le dé…</p>`;
+if(S.ph==="move")panel=`<div class="rdie" aria-label="Dé : ${S.die}">${DIE[S.die]}</div>${mine?`<p class="msg ok">Touchez une case qui brille sur le plateau.</p>`:`<p class="stat">${esc(A.name)} choisit sa case…</p>`}`;
+if(S.ph==="pick"){const picker=S.fin?rd:act;panel=picker===me?`<p class="kind">${S.fin?`Choisissez le thème de la question finale de ${esc(A.name)}`:"Choisissez votre thème"}</p><div class="rpick">${RCOL.map(c=>`<button class="opt" data-rc="${c}" style="--rc:${RHEX[c]}"><i></i>${rName(c)}</button>`).join("")}</div>`:`<p class="stat">${esc(S.players[picker].name)} choisit le thème…</p>`}
+if(S.ph==="q"){const q=S.q,card=roueDeck()[q.c][q.i];
+ panel=`<div class="rcard" style="--rc:${RHEX[q.c]}"><p class="rth">${rName(q.c)}${q.hq?" · quartier général":""}${q.fin?" · question finale":""}</p><p class="rq">${card.q}</p>
+ ${iRead?`<div class="rans"><b>Réponse :</b> ${esc(card.a)}${card.x?`<br><small>${card.x}</small>`:""}</div><p class="stat">Lisez la question à ${esc(A.name)}, puis validez.</p><div class="row"><button class="btn" data-act="rok">Bonne réponse</button><button class="btn ghost" data-act="rko">Mauvaise réponse</button></div>`
+ :mine?`<p class="msg">Répondez à voix haute : ${esc(S.players[rd].name)} vérifie.</p>`:`<p class="stat">${esc(S.players[rd].name)} lit la question à ${esc(A.name)}.</p>`}</div>`}
+if(S.ph==="end")panel=`<div class="rwin">${rLogo(70)}<h2>${esc(S.players[S.win].name)} gagne !</h2><p>Les six parts et la question finale : bravo.</p>${RG.host?`<div class="row" style="justify-content:center"><button class="btn" data-act="ragain">Nouvelle partie</button></div>`:""}</div>`;
+const last=S.last?`<div class="rlast ${S.last.ok?"ok":"ko"}"><span style="background:${RHEX[S.last.c]}"></span><p><b>${S.last.ok?"✓":"✗"} ${esc(S.last.name)}</b> · ${S.last.q}<br><i>Réponse : ${esc(S.last.a)}</i></p></div>`:"";
+app.innerHTML=rTop("salle "+RG.code)+`<section class="card rgame"><p class="rmsg">${esc(S.msg||"")}</p>${boardSvg(S,mine)}<div class="rpanel">${panel}</div>${last}
+<ul class="board">${plist}</ul>${RG.host&&S.ph!=="end"?`<div class="row" style="justify-content:flex-end"><button class="btn ghost rsmall" data-act="rskip">Passer ce tour</button></div>`:""}</section>`;
+}
+
 const MODES=[
 {id:"duel",name:"Duel en ligne",desc:"De 2 à 7 joueurs, chacun sur son téléphone : mêmes questions, le plus juste et le plus rapide l’emporte.",n:0},
 {id:"qcm",name:"Culture générale",desc:"Personnages, lieux, objets, Oscars.",n:10},
@@ -4623,13 +5164,14 @@ function setWorld(id){W=WORLDS[id];document.body.dataset.w=id;document.title=W.t
 try{const v=JSON.parse(localStorage.getItem(W.mixKey)||"null");MIX=v&&W.UK.every(u=>typeof v[u]==="number")?v:Object.assign({},W.PRESETS[0][1])}catch(e){MIX=Object.assign({},W.PRESETS[0][1])}
 D.uni=W.DUNI[0][0];home()}
 function home(){
-cineKill();stop();duelLeave();G=null;
+cineKill();stop();duelLeave();roueLeave();G=null;
 app.innerHTML=`<div class="top wtop"><button class="btn ghost" data-act="worlds">‹ Changer de monde</button></div>${hero()}
 <h1>${W.title}</h1>${ORN}
 <p class="sub">${W.sub}</p>
 <div class="modes">${card(MID("duel"),'<span class="tag">2 à 7</span>')}
 <button class="mode big" data-act="solo" style="--c:#3f7fae">${shieldSvg("med","#3f7fae",`<g transform="translate(10.5 12) scale(.9)"><circle cx="24" cy="14" r="7" fill="#f6efd9"/><path d="M10 42c1-10 7-17 14-17s13 7 14 17z" fill="#f6efd9"/><path d="M24 4l2 4 4 .5-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.5z" fill="#ffe39a" transform="translate(0 -4) scale(1 .9)"/></g>`,"sg-solo")}
 <div><b>Jeu solo</b><span>Le Grand voyage d’une traite, ou chaque jeu à votre rythme.</span></div></button>
+<button class="mode big roue-card" data-act="roue" style="--c:#e2b04a">${rLogo(64)}<div><b>La Roue des savoirs</b><span>Le grand jeu de plateau : dé, six thèmes, six parts à gagner et une question finale. De 2 à 6 joueurs, chacun sur son téléphone.</span></div><span class="tag">Nouveau</span></button>
 <button class="mode big" data-act="daily" style="--c:#b5652a">${med("daily")}<div><b>Le défi du jour</b><span>Dix questions, les mêmes pour tout le monde, un seul essai par jour. Comparez vos scores !</span>${(()=>{const ds=dailyState();return ds.streak>1&&ds.last&&(ds.last===dkey()||ds.last===dkey(new Date(Date.now()-864e5)))?`<small>🔥 ${ds.streak} jours de suite</small>`:""})()}</div>${dailyDone()?'<span class="tag done">Fait ✓</span>':'<span class="tag">Nouveau</span>'}</button>
 <button class="mode big" data-act="ach" style="--c:#8a6a12">${med("ach")}<div><b>Hauts faits</b><span>${ACH.filter(a=>achGot()[a[0]]).length} sur ${ACH.length} débloqués dans ce monde.</span></div></button></div>`;
 window.scrollTo({top:0});
@@ -5024,9 +5566,10 @@ try{await navigator.clipboard.writeText(txt+"\n"+url);if(m)m.textContent="Lien c
 catch(e){if(m)m.innerHTML=`<input readonly value="${esc(url)}" style="width:100%" onclick="this.select()">`}
 }
 function boot(){
-let w=null,p=null;try{const q=new URLSearchParams(location.search);w=q.get("w");p=(q.get("p")||"").toUpperCase();
-if(w||p)history.replaceState(null,"",location.pathname)}catch(e){}
+let w=null,p=null,rr="";try{const q=new URLSearchParams(location.search);w=q.get("w");p=(q.get("p")||"").toUpperCase();rr=(q.get("r")||"").toUpperCase();
+if(w||p||rr)history.replaceState(null,"",location.pathname)}catch(e){}
 if(w&&WORLDS[w]&&/^[A-Z]{4}$/.test(p)){setWorld(w);D.invite=p;duelEnter();return}
+if(w&&WORLDS[w]&&/^[A-Z]{4}$/.test(rr)){setWorld(w);RG.invite=rr;roueEnter();return}
 worlds();
 }
 function duelAct(a){
@@ -5233,12 +5776,20 @@ cine(`<div class="crings"><i></i><i></i><i></i></div><div class="cmed">${med("du
 app.addEventListener("submit",e=>{e.preventDefault();
 if(e.target.id==="whoF")whoGuess(document.getElementById("whoI").value);
 if(e.target.id==="duelF")duelForm(e.submitter);
+if(e.target.id==="roueF")roueSubmit(e.submitter);
 if(e.target.id==="dwhoF")dWhoGuess(document.getElementById("dwhoI").value);
 if(e.target.id==="dlistF")dListGuess(document.getElementById("dlistI").value);
 if(e.target.id==="listF")listGuess(document.getElementById("listI").value);
 });
 app.addEventListener("click",e=>{
+const rn=e.target.closest("[data-rn]");if(rn&&G&&G.roue)return rAct({a:"move",n:rn.dataset.rn});
 const t=e.target.closest("button");if(!t||t.disabled||t.form)return;
+if(t.dataset.rl!=null){RG.lvl=+t.dataset.rl;rRoster();return rLobby()}
+if(t.dataset.rc)return rAct({a:"pick",c:t.dataset.rc});
+if(t.dataset.act&&/^r(invite|start|roll|ok|ko|skip|again|back|oue)$/.test(t.dataset.act)){const a=t.dataset.act;
+ if(a==="roue")return roueEnter();if(a==="rinvite")return rShareInvite();if(a==="rstart")return rStart();if(a==="rback"){roueLeave();return roueForm()}
+ if(a==="rroll")return rAct({a:"roll"});if(a==="rok")return rAct({a:"judge",ok:1});if(a==="rko")return rAct({a:"judge",ok:0});
+ if(a==="rskip")return rAct({a:"skip"});if(a==="ragain")return rAct({a:"again"})}
 if(t.dataset.dm)return duelSet("mode",t.dataset.dm);
 if(t.dataset.dl!=null)return duelSet("lvl",+t.dataset.dl);
 if(t.dataset.dopt!=null)return duelAnswer(+t.dataset.dopt);
