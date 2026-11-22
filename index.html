@@ -213,6 +213,18 @@ body[data-w=sw] .cine .ct{text-shadow:0 2px 0 #1a0f08,0 0 30px rgba(255,170,90,.
 .suite .st.gap{background:var(--blood);color:#ffe9b8;border-color:var(--gold);display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:48px;min-height:36px}.suite .st b{display:inline;font-size:20px;line-height:1;color:#ffe9b8;animation:sblink 1.2s ease-in-out infinite}@keyframes sblink{50%{opacity:.35}}
 .suite i{font-style:normal;color:var(--gold);font-weight:700}
 /* La Roue des savoirs */
+.rbcard{text-align:start;border-radius:14px;border:2px solid #e2b04a;background:linear-gradient(180deg,#fffaf0,#f1e3c2);padding:10px 12px;box-shadow:0 6px 18px rgba(0,0,0,.18);animation:rcin .45s cubic-bezier(.2,1.3,.4,1)}
+.rbhead{margin:0 0 6px;font-family:Cinzel,serif;font-weight:700;text-align:center;color:var(--blood)}
+.rbcard ol{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.rbcard li{display:flex;gap:9px;align-items:flex-start;padding:6px 8px;border-radius:9px;background:rgba(0,0,0,.04)}
+.rbcard li>i{flex:none;width:14px;height:14px;border-radius:50%;background:var(--rc);margin-top:4px;box-shadow:0 0 0 2px rgba(255,255,255,.7)}
+.rbcard li.next{opacity:.55}.rbcard li.past.ok span{color:var(--ok)}.rbcard li.past.ko span{color:var(--blood)}
+.rbcard li.cur{background:color-mix(in srgb,var(--rc) 16%,#fff);border:2px solid var(--rc)}.rbcard li.cur>div{flex:1}
+.rbcard .rth{margin:0 0 4px;font-family:Cinzel,serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--rc) 70%,#000)}
+.rbcard .rq{font-size:19px;line-height:1.35;margin:0 0 8px}
+.rbscore{margin:8px 0 0;text-align:center;font-weight:700}
+.rgame .board li b.rlead{color:var(--blood)}
+
 .rmodes{display:grid;gap:10px;margin-top:12px;text-align:start}.rmodes .mode b{font-size:18px}
 .rworlds{display:grid;gap:10px;margin:12px 0}.rworlds .world{text-align:start}.rworlds .wtxt b{color:#ffd987}.rworlds .wtxt>span{color:#f3e6c4}.rworlds .wtxt i{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:4px;border:1px solid rgba(255,255,255,.5)}
 
@@ -310,6 +322,44 @@ body[data-w=hp] .cine .ct{text-shadow:0 2px 0 #1a0f38,0 0 30px rgba(190,160,255,
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06);box-shadow:0 0 0 4px rgba(70,150,80,.35)}100%{transform:none}}
 @keyframes nope{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
 @media(prefers-reduced-motion:reduce){.cine *,.cine,.qin,.qin *,.opt.ok.fxd,.card.nope,.fb{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important}.cbar i{animation-duration:inherit}.burst{display:none}}
+
+/* ===== Finition 2026 : fonds lisses, héros fondu, cartes sobres ===== */
+html body{--bg1:#22160d;--bg2:#0d0906;--glow:rgba(255,150,60,.24);
+ background:radial-gradient(120% 60% at 50% -8%,var(--glow),transparent 62%),radial-gradient(80% 50% at 100% 100%,rgba(0,0,0,.5),transparent 70%),linear-gradient(180deg,var(--bg1),var(--bg2) 70%);background-attachment:fixed}
+html body[data-w=hp]{--bg1:#1b1838;--bg2:#08071a;--glow:rgba(150,120,255,.26)}
+html body[data-w=sw]{--bg1:#141c31;--bg2:#05070e;--glow:rgba(255,140,80,.22)}
+.hx{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-top:calc(-1 * max(14px,env(safe-area-inset-top)))}
+.hx .hero{width:100%;margin:0;height:auto;aspect-ratio:800/470;-webkit-mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,.55) 74%,transparent 97%);mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,.55) 74%,transparent 97%)}
+.hx .hero::after{display:none}.hx .hero::before{opacity:.25}
+.hx .hero svg{object-fit:cover}
+.hxt{position:relative;z-index:2;margin-top:-11vw;padding:0 18px;text-align:center}
+@media(min-width:601px){.hx{width:min(100vw,1040px);margin-left:calc(50% - min(50vw,520px))}.hx .hero{height:auto;aspect-ratio:800/420;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,#000 50%,transparent 96%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,#000 50%,transparent 96%);mask-composite:intersect}.hxt{margin-top:-130px}}
+.hxt h1{text-shadow:0 2px 0 rgba(0,0,0,.6),0 6px 30px rgba(0,0,0,.75),0 0 40px color-mix(in srgb,var(--gold2) 30%,transparent)}
+.eyebrow{margin:0 0 6px;font-family:Cinzel,Georgia,serif;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.hxt .sub{text-wrap:pretty;color:color-mix(in srgb,var(--ink) 78%,transparent);font-size:16px}
+.sect{display:flex;align-items:center;gap:12px;margin:30px 2px 12px;font-family:Cinzel,Georgia,serif;font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.sect::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--gold) 55%,transparent),transparent)}
+.sect+.modes{margin-top:0}
+html body .mode,html body .mode.big,html body[data-w] .mode,html body[data-w] .mode.big{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.09);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 28px rgba(0,0,0,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:transform .2s,border-color .2s,background .2s}
+html body .mode.big{padding:14px 46px 14px 14px;gap:14px}
+html body .mode.big::after{content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;border-top:2px solid var(--gold);border-right:2px solid var(--gold);transform:translateY(-50%) rotate(45deg);opacity:.75}
+@media(hover:hover){html body .mode:hover{border-color:color-mix(in srgb,var(--gold) 55%,transparent);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03));transform:translateY(-2px)}}
+html body .mode.big .med,html body .mode.big>svg{width:52px;height:60px;flex:none}
+html body .mode.big.roue-card>svg{width:52px;height:52px}
+html body .mode b{color:#fff1d2;letter-spacing:.015em}html body .mode.big b{font-size:17px}
+html body .mode span{color:color-mix(in srgb,var(--ink) 66%,transparent)}
+html body .mode .tag{top:11px;right:14px;font-family:Alegreya,Georgia,serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 8px;line-height:1.75;color:var(--gold2);background:color-mix(in srgb,var(--gold) 14%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+html body .mode .tag.done{color:#bff0c4;background:rgba(80,170,100,.16);border-color:rgba(120,200,140,.45)}
+html body .mode.big:has(.tag) div{padding-right:34px}
+/* Accueil : cartes-affiches */
+html body .world{position:relative;border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 22px 44px rgba(0,0,0,.5);background:#0b0807}
+html body .world .wpic{aspect-ratio:16/10}
+html body .world .wtxt,html body .world[data-w] .wtxt{position:absolute;left:0;right:0;bottom:0;padding:56px 18px 16px;background:linear-gradient(180deg,transparent,rgba(5,4,6,.6) 38%,rgba(5,4,6,.94))}
+html body .world .wtxt b{font-size:24px;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+html body .world .wtxt span{color:rgba(240,228,205,.86);text-shadow:0 1px 6px rgba(0,0,0,.7)}
+@media(hover:hover){html body .world:hover{border-color:color-mix(in srgb,var(--gold) 60%,transparent)}}
+.landing h1{text-shadow:0 4px 30px rgba(255,170,80,.25)}
+html body .rland{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.1);border-radius:18px;box-shadow:0 18px 36px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
@@ -5034,6 +5084,7 @@ sw:{bleu:"Personnages",rose:"Planètes et lieux",jaune:"Répliques",marron:"Coul
 const rName=c=>(RNAMES[W.id]||RNAMES.me)[c];
 const RPCOL=["#ffffff","#1b1b1b","#8e44ad","#c0392b","#16a085","#7f8c8d"];
 const RMAX=6;
+const rde=n=>(/^[aeiouyhàâéèêîôûAEIOUYHÀÂÉÈÊÎÔÛ]/.test(n)?"d’":"de ")+n;
 
 /* ---------- Les questions, rangées par thème ---------- */
 const RRX={
@@ -5106,7 +5157,7 @@ return `<svg class="rboard" viewBox="0 0 360 360" role="img" aria-label="Plateau
 }
 
 /* ---------- État partagé : tenu par l’hôte ---------- */
-const RG={get pid(){return D.pid},ch:null,code:null,host:false,S:null,lobby:{order:[],names:{}},lvl:0,used:{}};
+const RG={get pid(){return D.pid},ch:null,code:null,host:false,S:null,lobby:{order:[],names:{}},lvl:0,used:{},gt:"board",target:3};
 const remit=(t,d)=>{if(RG.ch)RG.ch.emit(t,Object.assign({pid:RG.pid,name:D.name},d))};
 const rActive=S=>S.order[S.t],rReader=S=>S.order[(S.t+1)%S.order.length];
 function rTop(t){return `<div class="top"><div class="cin">La Roue des savoirs${t?" · "+t:""}</div><button class="btn ghost" data-act="${RG.pre?"home":"worlds"}">Quitter</button></div>`}
@@ -5134,17 +5185,25 @@ app.innerHTML=rTop()+`<section class="card"><h2 style="text-align:center">Un seu
 <div class="rlegend">${RCOL.map(c=>`<span><i style="background:${RHEX[c]}"></i>${rName(c)}</span>`).join("")}</div>
 <p class="kind">Les joueurs, dans l’ordre du tour</p><form id="rLocF" autocomplete="off">${n.map((x,i)=>`<div class="ans"><span class="rdot" style="background:${RPCOL[i]};align-self:center"></span><input data-ln="${i}" type="text" maxlength="18" placeholder="Joueur ${i+1}" value="${esc(x)}" aria-label="Joueur ${i+1}">${n.length>2?`<button class="btn ghost" type="button" data-lrm="${i}" aria-label="Retirer">✕</button>`:""}</div>`).join("")}</form>
 ${n.length<RMAX?`<div class="row"><button class="btn ghost" data-act="rladd">+ Ajouter un joueur</button></div>`:""}
-<p class="kind" style="margin-top:14px">Niveau des questions</p><div class="seg">${[0,1,2,3,4].map(l=>`<button class="opt ${RG.lvl===l?"on":""}" data-rl="${l}">${LV[l]}</button>`).join("")}</div>
+${rOpts()}
 <p class="msg ko" id="rlmsg"></p><div class="row"><button class="btn" data-act="rlstart" style="flex:1">Lancer la partie</button></div></section>`}
+function rOpts(){return `<p class="kind" style="margin-top:14px">Façon de jouer</p><div class="seg">${[["board","Plateau"],["cards","Bataille de cartes"]].map(([k,n])=>`<button class="opt ${RG.gt===k?"on":""}" data-rgt="${k}">${n}</button>`).join("")}</div>
+<p class="stat" style="margin:6px 0 0">${RG.gt==="cards"?"Sans plateau : chacun répond à son tour à une carte de six questions, une par thème. À chaque manche, le meilleur score marque un point.":"Le jeu complet : dé, plateau en roue, six parts à gagner, question finale au centre."}</p>
+${RG.gt==="cards"?`<p class="kind" style="margin-top:14px">Points pour gagner</p><div class="seg">${[3,5].map(n=>`<button class="opt ${RG.target===n?"on":""}" data-rtg="${n}">${n} points</button>`).join("")}</div>`:""}
+<p class="kind" style="margin-top:14px">Niveau des questions</p><div class="seg">${[0,1,2,3,4].map(l=>`<button class="opt ${RG.lvl===l?"on":""}" data-rl="${l}">${LV[l]}</button>`).join("")}</div>`}
+function rInit(ids,names){
+RG.used={};RG.rev=false;
+const S={seq:Date.now(),lvl:RG.lvl,gt:RG.gt,target:RG.target,order:ids,players:Object.fromEntries(ids.map((p,i)=>[p,{name:String(names[i]||"?").slice(0,18),pos:"H",w:[],pts:0}])),t:0,ph:"roll",die:null,opts:[],q:null,last:null,msg:`La partie commence ! À ${names[0]} de lancer le dé.`};
+RG.S=S;if(S.gt==="cards"){Object.assign(S,{round:1,done:0,rs:{}});rDeal(S);S.msg=`Manche 1 : la carte ${rde(names[0])}, lue par ${names[1]}.`}
+return S}
+function rDeal(S){S.ph="card";S.card=RCOL.map(c=>({c,i:rCard(c)}));S.cq=0;S.res=[]}
 function rLocalSync(){document.querySelectorAll("[data-ln]").forEach(i=>{RG.lnames[+i.dataset.ln]=i.value})}
 function rLocalStart(){
 rLocalSync();const names=RG.lnames.map(x=>x.trim()).filter(Boolean);
 if(names.length<2){const m=document.getElementById("rlmsg");if(m)m.textContent="Il faut au moins deux joueurs avec un nom.";return}
 try{localStorage.setItem("roue-local",JSON.stringify(names))}catch(e){}
-RG.local=true;RG.host=true;RG.code=null;RG.used={};RG.rev=false;
-const ids=names.map((x,i)=>"p"+i);
-RG.S={seq:1,lvl:RG.lvl,order:ids,players:Object.fromEntries(ids.map((p,i)=>[p,{name:names[i].slice(0,18),pos:"H",w:[]}])),t:0,ph:"roll",die:null,opts:[],q:null,last:null,msg:`La partie commence ! À ${names[0]} de lancer le dé.`};
-rRender()}
+RG.local=true;RG.host=true;RG.code=null;
+rInit(names.map((x,i)=>"p"+i),names);rRender()}
 function roueEnter(){
 stop();G={roue:true};
 app.innerHTML=rTop()+`<section class="card"><p class="stat">Ouverture de la salle de jeu…</p></section>`;
@@ -5178,14 +5237,14 @@ if(!RG.ch){roueForm();const m=document.getElementById("rmsg");m.className="msg k
 const on=(t,f)=>RG.ch.on(t,m=>{if(m&&m.pid&&m.pid!==RG.pid&&RG.code===code)f(m)});
 on("hello",m=>{if(!RG.host)return;const L=RG.lobby;L.names[m.pid]=String(m.name||"?").slice(0,18);
  if(!L.order.includes(m.pid)&&!RG.S&&L.order.length<RMAX)L.order.push(m.pid);rRoster();if(!RG.S)rLobby();else remit("next",{S:RG.S})});
-on("roster",m=>{if(RG.host)return;RG.lastHost=Date.now();RG.hostPid=m.pid;RG.lobby={order:m.order||[],names:m.names||{}};RG.lvl=m.lvl||0;if(!RG.S)rLobby()});
+on("roster",m=>{if(RG.host)return;RG.lastHost=Date.now();RG.hostPid=m.pid;RG.lobby={order:m.order||[],names:m.names||{}};RG.lvl=m.lvl||0;RG.gt=m.gt==="cards"?"cards":"board";RG.target=m.target===5?5:3;if(!RG.S)rLobby()});
 on("next",m=>{if(RG.host)return;RG.lastHost=Date.now();if(!m.S||(RG.S&&m.S.seq<=RG.S.seq))return;RG.S=m.S;rRender()});
 on("ans",m=>{if(RG.host)rApply(m.pid,m)});
 RG.beat=setInterval(()=>{if(RG.host){if(RG.S)remit("next",{S:RG.S});else rRoster()}else if(!RG.S||!RG.S.order.includes(RG.pid))remit("hello",{})},2500);
 if(host)rRoster();else remit("hello",{});
 rLobby();
 }
-const rRoster=()=>remit("roster",{order:RG.lobby.order,names:RG.lobby.names,lvl:RG.lvl});
+const rRoster=()=>remit("roster",{order:RG.lobby.order,names:RG.lobby.names,lvl:RG.lvl,gt:RG.gt,target:RG.target});
 function rLogo(s){return `<svg width="${s}" height="${s}" viewBox="-30 -30 60 60" aria-hidden="true">${wedgeSvg(RCOL,26,0,0,"#e2b04a")}<circle r="7" fill="#2a1d12" stroke="#e2b04a" stroke-width="1.5"/></svg>`}
 function rLobby(){
 if(!G||!G.roue||RG.S)return;const L=RG.lobby,inR=L.order.includes(RG.pid);
@@ -5196,9 +5255,9 @@ app.innerHTML=rTop("salle "+RG.code)+`<section class="card"><p class="kind" styl
 ${url?`<div class="row" style="justify-content:center"><button class="btn" data-act="rinvite">Envoyer le lien d’invitation</button></div><p class="msg ok" id="invMsg" style="text-align:center"></p>`:""}
 <ul class="board">${Array.from({length:RMAX},(_,i)=>{const p=L.order[i];return p?`<li class="${p===RG.pid?"me":""}"><span class="who"><span class="rdot" style="background:${RPCOL[i]}"></span><span class="nm">${esc(L.names[p]||"?")}</span>${p===RG.pid?" (vous)":""}</span></li>`:`<li><span class="who"><span class="rdot free"></span><span class="free">place libre</span></span></li>`}).join("")}</ul>
 <div class="rlegend">${RCOL.map(c=>`<span><i style="background:${RHEX[c]}"></i>${rName(c)}</span>`).join("")}</div>
-${RG.host?`<p class="kind" style="margin-top:14px">Niveau des questions</p><div class="seg">${[0,1,2,3,4].map(l=>`<button class="opt ${RG.lvl===l?"on":""}" data-rl="${l}">${LV[l]}</button>`).join("")}</div>
+${RG.host?`${rOpts()}
 <div class="row"><button class="btn" data-act="rstart" ${n<2?"disabled":""} style="flex:1">${n<2?"En attente d’un 2e joueur":`Lancer la partie · ${n} joueurs`}</button></div>`
-:`<p class="msg" style="text-align:center">L’hôte va lancer la partie…</p>`}</section>`;
+:`<p class="stat" style="text-align:center">${RG.gt==="cards"?`Bataille de cartes, en ${RG.target} points`:"Partie sur le plateau"} · ${LV[RG.lvl]}</p><p class="msg" style="text-align:center">L’hôte va lancer la partie…</p>`}</section>`;
 }
 function rInviteUrl(){try{if(!/^https?:$/.test(location.protocol)||/claude\.ai|claudeusercontent|anthropic/.test(location.hostname))return "";return location.origin+location.pathname+"?w="+W.id+"&r="+RG.code}catch(e){return ""}}
 async function rShareInvite(){
@@ -5208,13 +5267,13 @@ try{await navigator.clipboard.writeText(txt+"\n"+url);if(m)m.textContent="Lien c
 }
 function rStart(){
 if(!RG.host||RG.lobby.order.length<2)return;const L=RG.lobby;
-RG.used={};RG.S={seq:1,lvl:RG.lvl,order:L.order.slice(),players:Object.fromEntries(L.order.map(p=>[p,{name:L.names[p]||"?",pos:"H",w:[]}])),t:0,ph:"roll",die:null,opts:[],q:null,last:null,msg:"La partie commence !"};
+rInit(L.order.slice(),L.order.map(p=>L.names[p]||"?"));
 rPush();
 }
 function rPush(){RG.S.seq++;RG.rev=false;if(!RG.local)remit("next",{S:RG.S});rRender()}
 /* l’hôte choisit une question du thème, au niveau voulu, sans répétition */
 function rCard(c){
-const deck=roueDeck()[c],lv=RG.S.lvl,ok={0:[1,2,3,4],1:[1,2],2:[2,3],3:[3,4],4:[4,3]}[lv]||[1,2,3,4];
+const deck=roueDeck()[c],lv=RG.S?RG.S.lvl:RG.lvl,ok={0:[1,2,3,4],1:[1,2],2:[2,3],3:[3,4],4:[4,3]}[lv]||[1,2,3,4];
 const used=RG.used[c]=RG.used[c]||new Set();
 let pool=deck.map((x,i)=>i).filter(i=>!used.has(i)&&ok.includes(deck[i].l));
 if(!pool.length)pool=deck.map((x,i)=>i).filter(i=>!used.has(i));
@@ -5223,7 +5282,24 @@ const i=pool[Math.floor(Math.random()*pool.length)];used.add(i);return i;
 }
 function rAsk(c,hq,fin){const S=RG.S;S.q={c,i:rCard(c),hq:!!hq,fin:!!fin};S.ph="q"}
 function rApply(pid,m){
-const S=RG.S;if(!S||S.ph==="end")return;const act=rActive(S),rd=rReader(S),P=S.players[act];
+const S=RG.S;if(!S)return;
+if(m.a==="again"&&pid===RG.pid&&RG.host){rInit(S.order,S.order.map(p=>S.players[p].name));return rPush()}
+if(S.ph==="end")return;const act=rActive(S),rd=rReader(S),P=S.players[act];
+if(S.gt==="cards"){
+ const done=()=>{const sc=S.res.reduce((a,b)=>a+b,0);S.rs[act]=sc;S.done++;S.msg=`${P.name} termine sa carte : ${sc} sur 6.`;
+  if(S.done<S.order.length){S.t=(S.t+1)%S.order.length;rDeal(S);S.msg+=` Au tour de ${S.players[rActive(S)].name}.`;return rPush()}
+  const best=Math.max(...S.order.map(p=>S.rs[p]||0)),win=best>0?S.order.filter(p=>S.rs[p]===best):[];
+  win.forEach(p=>S.players[p].pts++);S.rwin=win;S.ph="round";
+  S.msg=win.length?`Manche ${S.round} : ${win.map(p=>S.players[p].name).join(" et ")} marque${win.length>1?"nt":""} un point avec ${best} sur 6 !`:`Manche ${S.round} : personne ne marque.`;
+  const top=Math.max(...S.order.map(p=>S.players[p].pts)),lead=S.order.filter(p=>S.players[p].pts===top);
+  if(top>=S.target&&lead.length===1){S.ph="end";S.win=lead[0];S.msg+=` ${S.players[lead[0]].name} gagne la bataille !`}
+  else if(top>=S.target)S.msg+=" Égalité en tête : manche décisive !";
+  return rPush()};
+ if(m.a==="judge"&&S.ph==="card"&&pid===rd){const it=S.card[S.cq],card=roueDeck()[it.c][it.i];S.res.push(m.ok?1:0);S.last={c:it.c,q:card.q,a:card.a,ok:!!m.ok,name:P.name};S.cq++;
+  if(S.cq<6){S.msg=`Carte ${rde(P.name)} : ${S.res.reduce((a,b)=>a+b,0)} sur ${S.cq}.`;return rPush()}return done()}
+ if(m.a==="nround"&&S.ph==="round"&&pid===RG.pid&&RG.host){S.round++;S.done=0;S.rs={};S.rwin=[];S.t=(S.round-1)%S.order.length;rDeal(S);S.last=null;S.msg=`Manche ${S.round} : la carte ${rde(S.players[rActive(S)].name)}, lue par ${S.players[rReader(S)].name}.`;return rPush()}
+ if(m.a==="skip"&&pid===RG.pid&&RG.host&&S.ph==="card"){while(S.cq<6){S.res.push(0);S.cq++}return done()}
+ return}
 if(m.a==="roll"&&S.ph==="roll"&&pid===act){S.die=1+Math.floor(Math.random()*6);S.opts=rDests(P.pos,S.die);S.ph="move";S.msg=`${P.name} fait ${S.die}.`;return rPush()}
 if(m.a==="move"&&S.ph==="move"&&pid===act&&S.opts.includes(m.n)){P.pos=m.n;const n=rNode(m.n);S.opts=[];
  if(n.t==="roll"){S.ph="roll";S.msg=`${P.name} tombe sur une case « rejouer » et relance le dé.`}
@@ -5237,14 +5313,13 @@ if(m.a==="judge"&&S.ph==="q"&&pid===rd){const q=S.q,card=roueDeck()[q.c][q.i];S.
  else{S.t=(S.t+1)%S.order.length;S.ph="roll";S.msg=`Raté ! Au tour de ${S.players[rActive(S)].name}.`}
  S.q=null;S.die=null;return rPush()}
 if(m.a==="skip"&&pid===RG.pid&&RG.host){S.t=(S.t+1)%S.order.length;S.ph="roll";S.q=null;S.die=null;S.opts=[];S.msg=`Tour passé. Au tour de ${S.players[rActive(S)].name}.`;return rPush()}
-if(m.a==="again"&&pid===RG.pid&&RG.host){if(RG.local){RG.S.players=Object.fromEntries(S.order.map(p=>[p,{name:S.players[p].name,pos:"H",w:[]}]));Object.assign(S,{t:0,ph:"roll",q:null,die:null,opts:[],last:null,win:null,msg:"Nouvelle partie !"});RG.used={};return rPush()}RG.S=null;rStart()}
 }
 function rAct(m){
-if(RG.local){const S=RG.S;if(!S)return;const who=(m.a==="judge"||(m.a==="pick"&&S.fin))?rReader(S):m.a==="skip"||m.a==="again"?RG.pid:rActive(S);return rApply(who,m)}
+if(RG.local){const S=RG.S;if(!S)return;const who=(m.a==="judge"||(m.a==="pick"&&S.fin))?rReader(S):m.a==="skip"||m.a==="again"||m.a==="nround"?RG.pid:rActive(S);return rApply(who,m)}
 if(RG.host)rApply(RG.pid,m);else remit("ans",m)}
 const DIE=["","⚀","⚁","⚂","⚃","⚄","⚅"];
 function rRender(){
-if(!G||!G.roue)return;const S=RG.S;if(!S)return rLobby();
+if(!G||!G.roue)return;const S=RG.S;if(!S)return rLobby();if(S.gt==="cards")return rRenderCards(S);
 const L=RG.local,me=L?null:RG.pid,act=rActive(S),rd=rReader(S),A=S.players[act],mine=L||act===me,iRead=L?RG.rev:rd===me;
 const plist=S.order.map((p,i)=>{const P=S.players[p];return `<li class="${p===act?"me":""}"><span class="who"><svg width="30" height="30" viewBox="-15 -15 30 30">${wedgeSvg(P.w,12,0,0,RPCOL[i])}</svg><span><span class="nm">${esc(P.name)}</span>${!L&&p===me?" (vous)":""}<br><span class="stat">${P.w.length} part${P.w.length>1?"s":""}${p===act&&S.ph!=="end"?" · joue":""}${p===rd&&S.ph==="q"?" · lit la question":""}</span></span></span></li>`}).join("");
 let panel="";
@@ -5262,8 +5337,31 @@ app.innerHTML=rTop(L?W.name:"salle "+RG.code)+`<section class="card rgame"><p cl
 <ul class="board">${plist}</ul>${RG.host&&S.ph!=="end"?`<div class="row" style="justify-content:flex-end"><button class="btn ghost rsmall" data-act="rskip">Passer ce tour</button></div>`:""}</section>`;
 }
 
+/* ---------- Bataille de cartes : sans plateau ---------- */
+function rRenderCards(S){
+const L=RG.local,me=L?null:RG.pid,act=rActive(S),rd=rReader(S),A=S.players[act],R=S.players[rd],mine=L||act===me,iRead=L?RG.rev:rd===me;
+const top=Math.max(...S.order.map(p=>S.players[p].pts));
+const plist=S.order.map((p,i)=>{const P=S.players[p],sc=S.rs&&S.rs[p]!=null?S.rs[p]:null;
+ return `<li class="${p===act&&S.ph==="card"?"me":""}"><span class="who"><span class="rdot" style="background:${RPCOL[i]}"></span><span><span class="nm">${esc(P.name)}</span>${!L&&p===me?" (vous)":""}<br><span class="stat">${sc!=null?`carte : ${sc} sur 6`:p===act&&S.ph==="card"?"répond à sa carte":p===rd&&S.ph==="card"?"lit la carte":"attend son tour"}${S.rwin&&S.rwin.includes(p)&&S.ph!=="card"?" · +1 point":""}</span></span></span><b class="${P.pts===top&&top>0?"rlead":""}">${P.pts} pt${P.pts>1?"s":""}</b></li>`}).join("");
+let panel="";
+if(S.ph==="card"){const it=S.card[S.cq],cur=roueDeck()[it.c][it.i];
+ panel=`<div class="rbcard"><p class="rbhead">Carte ${rde(esc(A.name))} · manche ${S.round}</p><ol>${S.card.map((x,k)=>{const q=roueDeck()[x.c][x.i];
+  if(k<S.cq)return `<li class="past ${S.res[k]?"ok":"ko"}" style="--rc:${RHEX[x.c]}"><i></i><span>${S.res[k]?"✓":"✗"} ${rName(x.c)}</span></li>`;
+  if(k>S.cq)return `<li class="next" style="--rc:${RHEX[x.c]}"><i></i><span>${rName(x.c)}</span></li>`;
+  return `<li class="cur" style="--rc:${RHEX[x.c]}"><i></i><div><p class="rth">${rName(x.c)} · question ${k+1} sur 6</p><p class="rq">${q.q}</p>
+  ${iRead?`<div class="rans"><b>Réponse :</b> ${esc(q.a)}${q.x&&N(q.x)!==N(q.a)?`<br><small>${q.x}</small>`:""}</div><p class="stat">${L?esc(R.name)+", validez la réponse de "+esc(A.name):"Lisez la question à "+esc(A.name)+", puis validez"}.</p><div class="row"><button class="btn" data-act="rok">Bonne réponse</button><button class="btn ghost" data-act="rko">Mauvaise réponse</button></div>`
+  :L?`<p class="stat">${esc(R.name)} lit la question à ${esc(A.name)}, qui répond à voix haute.</p><div class="row" style="justify-content:center"><button class="btn" data-act="rreveal">Voir la réponse</button></div>`
+  :mine?`<p class="msg">Répondez à voix haute : ${esc(R.name)} vérifie.</p>`:`<p class="stat">${esc(R.name)} lit la question à ${esc(A.name)}.</p>`}</div></li>`}).join("")}</ol>
+  <p class="rbscore">${S.res.reduce((a,b)=>a+b,0)} bonne${S.res.reduce((a,b)=>a+b,0)>1?"s":""} réponse${S.res.reduce((a,b)=>a+b,0)>1?"s":""} sur ${S.cq}</p></div>`}
+if(S.ph==="round")panel=`<div class="rwin"><h2>Fin de la manche ${S.round}</h2><p>${S.rwin&&S.rwin.length?`${S.rwin.map(p=>esc(S.players[p].name)).join(" et ")} marque${S.rwin.length>1?"nt":""} un point.`:"Personne ne marque."} Premier à ${S.target} points.</p>${RG.host?`<div class="row" style="justify-content:center"><button class="btn rbig" data-act="rnround">Manche suivante</button></div>`:`<p class="stat">L’hôte lance la manche suivante…</p>`}</div>`;
+if(S.ph==="end")panel=`<div class="rwin">${rLogo(70)}<h2>${esc(S.players[S.win].name)} gagne la bataille !</h2><p>${S.players[S.win].pts} points en ${S.round} manche${S.round>1?"s":""}.</p>${RG.host?`<div class="row" style="justify-content:center"><button class="btn" data-act="ragain">Nouvelle partie</button></div>`:""}</div>`;
+const last=S.last&&S.ph==="card"&&S.cq>0?`<div class="rlast ${S.last.ok?"ok":"ko"}"><span style="background:${RHEX[S.last.c]}"></span><p><b>${S.last.ok?"✓":"✗"} ${esc(S.last.name)}</b> · ${S.last.q}<br><i>Réponse : ${esc(S.last.a)}</i></p></div>`:"";
+app.innerHTML=rTop(L?W.name+" · cartes":"salle "+RG.code)+`<section class="card rgame"><p class="rmsg">${esc(S.msg||"")}</p><div class="rpanel">${panel}</div>${last}
+<ul class="board">${plist}</ul>${RG.host&&S.ph==="card"?`<div class="row" style="justify-content:flex-end"><button class="btn ghost rsmall" data-act="rskip">Passer cette carte</button></div>`:""}</section>`;
+}
+
 const MODES=[
-{id:"duel",name:"Duel en ligne",desc:"De 2 à 7 joueurs, chacun sur son téléphone : mêmes questions, le plus juste et le plus rapide l’emporte.",n:0},
+{id:"duel",name:"Duel en ligne",desc:"Mêmes questions pour tous, en direct, chacun sur son téléphone. Choisissez l’épreuve.",n:0},
 {id:"qcm",name:"Culture générale",desc:"Personnages, lieux, objets, Oscars.",n:10},
 {id:"secret",name:"Secrets de tournage",desc:"Coulisses, accidents, castings ratés.",n:10},
 {id:"who",name:"Qui suis-je ?",desc:"Cinq indices, réponse libre. Moins vous en lisez, plus vous marquez.",n:6},
@@ -5334,14 +5432,16 @@ try{const v=JSON.parse(localStorage.getItem(W.mixKey)||"null");MIX=v&&W.UK.every
 D.uni=W.DUNI[0][0];home()}
 function home(){
 cineKill();stop();duelLeave();roueLeave();G=null;
-app.innerHTML=`<div class="top wtop"><button class="btn ghost" data-act="worlds">‹ Changer de monde</button></div>${hero()}
+app.innerHTML=`<div class="top wtop"><button class="btn ghost" data-act="worlds">‹ Changer de monde</button></div><header class="hx">${hero()}<div class="hxt"><p class="eyebrow">${W.name}</p>
 <h1>${W.title}</h1>${ORN}
-<p class="sub">${W.sub}</p>
+<p class="sub">${W.sub.replace(/ ([?!:;»])/g,"\u00a0$1")}</p></div></header>
+<p class="sect">Entre amis</p>
 <div class="modes">${card(MID("duel"),'<span class="tag">2 à 7</span>')}
-<button class="mode big" data-act="voyOnline" style="--c:#7a3fae">${shieldSvg("med","#7a3fae",`<g transform="translate(12 12)"><path d="M4 30L14 8l8 14 6-8 8 16z" fill="#f6efd9"/><circle cx="30" cy="8" r="4" fill="#f6efd9"/></g>`,"sg-voyo")}<div><b>Grand voyage en ligne</b><span>Les huit étapes du voyage, de la culture générale au grand inventaire, contre vos amis : de 2 à 7 joueurs, chacun sur son téléphone.</span></div><span class="tag">En ligne</span></button>
-<button class="mode big" data-act="solo" style="--c:#3f7fae">${shieldSvg("med","#3f7fae",`<g transform="translate(10.5 12) scale(.9)"><circle cx="24" cy="14" r="7" fill="#f6efd9"/><path d="M10 42c1-10 7-17 14-17s13 7 14 17z" fill="#f6efd9"/><path d="M24 4l2 4 4 .5-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.5z" fill="#ffe39a" transform="translate(0 -4) scale(1 .9)"/></g>`,"sg-solo")}
+<button class="mode big" data-act="voyOnline" style="--c:#7a3fae">${shieldSvg("med","#7a3fae",`<g transform="translate(12 12)"><path d="M4 30L14 8l8 14 6-8 8 16z" fill="#f6efd9"/><circle cx="30" cy="8" r="4" fill="#f6efd9"/></g>`,"sg-voyo")}<div><b>Grand voyage en ligne</b><span>Les huit étapes du voyage, jusqu’au grand inventaire, contre vos amis.</span></div><span class="tag">2 à 7</span></button>
+<button class="mode big roue-card" data-act="roue" style="--c:#e2b04a">${rLogo(64)}<div><b>La Roue des savoirs</b><span>Le jeu de plateau et sa bataille de cartes, à un ou plusieurs téléphones.</span></div><span class="tag">2 à 6</span></button></div>
+<p class="sect">En solo</p><div class="modes"><button class="mode big" data-act="solo" style="--c:#3f7fae">${shieldSvg("med","#3f7fae",`<g transform="translate(10.5 12) scale(.9)"><circle cx="24" cy="14" r="7" fill="#f6efd9"/><path d="M10 42c1-10 7-17 14-17s13 7 14 17z" fill="#f6efd9"/><path d="M24 4l2 4 4 .5-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.5z" fill="#ffe39a" transform="translate(0 -4) scale(1 .9)"/></g>`,"sg-solo")}
 <div><b>Jeu solo</b><span>Le Grand voyage d’une traite, ou chaque jeu à votre rythme.</span></div></button>
-<button class="mode big roue-card" data-act="roue" style="--c:#e2b04a">${rLogo(64)}<div><b>La Roue des savoirs</b><span>Le grand jeu de plateau : dé, six thèmes, six parts à gagner et une question finale. De 2 à 6 joueurs, chacun sur son téléphone.</span></div><span class="tag">Nouveau</span></button>
+
 <button class="mode big" data-act="daily" style="--c:#b5652a">${med("daily")}<div><b>Le défi du jour</b><span>Dix questions, les mêmes pour tout le monde, un seul essai par jour. Comparez vos scores !</span>${(()=>{const ds=dailyState();return ds.streak>1&&ds.last&&(ds.last===dkey()||ds.last===dkey(new Date(Date.now()-864e5)))?`<small>🔥 ${ds.streak} jours de suite</small>`:""})()}</div>${dailyDone()?'<span class="tag done">Fait ✓</span>':'<span class="tag">Nouveau</span>'}</button>
 <button class="mode big" data-act="ach" style="--c:#8a6a12">${med("ach")}<div><b>Hauts faits</b><span>${ACH.filter(a=>achGot()[a[0]]).length} sur ${ACH.length} débloqués dans ce monde.</span></div></button></div>`;
 window.scrollTo({top:0});
@@ -5959,11 +6059,12 @@ if(t.dataset.act==="voyOnline"){D.mode="voy";return duelEnter()}
 if(t.dataset.rw)return rWorld(t.dataset.rw);
 if(t.dataset.rm)return roueMode(t.dataset.rm);
 if(t.dataset.lrm!=null){rLocalSync();RG.lnames.splice(+t.dataset.lrm,1);return rLocalForm()}
+if(t.dataset.rgt||t.dataset.rtg){if(t.dataset.rgt)RG.gt=t.dataset.rgt;else RG.target=+t.dataset.rtg;if(RG.mode==="local"&&!RG.S){rLocalSync();return rLocalForm()}rRoster();return rLobby()}
 if(t.dataset.rl!=null){RG.lvl=+t.dataset.rl;if(RG.mode==="local"&&!RG.S){rLocalSync();return rLocalForm()}rRoster();return rLobby()}
 if(t.dataset.rc)return rAct({a:"pick",c:t.dataset.rc});
-if(t.dataset.act&&/^r(invite|start|roll|ok|ko|skip|again|back|oue|ladd|lstart|reveal)$/.test(t.dataset.act)){const a=t.dataset.act;
+if(t.dataset.act&&/^r(invite|start|roll|ok|ko|skip|again|back|oue|ladd|lstart|reveal|nround)$/.test(t.dataset.act)){const a=t.dataset.act;
  if(a==="roue")return roueHub(G&&G.roue?RG.pre:(document.body.dataset.w?W.id:null));
- if(a==="rladd"){rLocalSync();RG.lnames.push("");return rLocalForm()}if(a==="rlstart")return rLocalStart();if(a==="rreveal"){RG.rev=true;return rRender()}if(a==="rinvite")return rShareInvite();if(a==="rstart")return rStart();if(a==="rback"){roueLeave();return roueForm()}
+ if(a==="rnround")return rAct({a:"nround"});if(a==="rladd"){rLocalSync();RG.lnames.push("");return rLocalForm()}if(a==="rlstart")return rLocalStart();if(a==="rreveal"){RG.rev=true;return rRender()}if(a==="rinvite")return rShareInvite();if(a==="rstart")return rStart();if(a==="rback"){roueLeave();return roueForm()}
  if(a==="rroll")return rAct({a:"roll"});if(a==="rok")return rAct({a:"judge",ok:1});if(a==="rko")return rAct({a:"judge",ok:0});
  if(a==="rskip")return rAct({a:"skip"});if(a==="ragain")return rAct({a:"again"})}
 if(t.dataset.dm)return duelSet("mode",t.dataset.dm);
